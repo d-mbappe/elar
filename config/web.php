@@ -4,6 +4,7 @@ use yii\web\ForbiddenHttpException;
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
+$memcache = require __DIR__ . '/memcache.php';
 
 $config = [
     'id' => 'basic',
@@ -21,9 +22,7 @@ $config = [
             ],
             'cookieValidationKey' => 'jt2DMAM9pOdQjMPCcRgCR2c9owF_jiLB',
         ],
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
-        ],
+        'cache' => $memcache,
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
