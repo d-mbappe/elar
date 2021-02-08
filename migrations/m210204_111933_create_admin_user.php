@@ -13,7 +13,10 @@ class m210204_111933_create_admin_user extends Migration
      */
     public function safeUp()
     {
-        $this->insert('user', [
+        $this->alterColumn('{{%auth_assignment}}', 'user_id', $this->integer()->unsigned()->notNull());
+        $this->addForeignKey('user_assignment', '{{%auth_assignment}}', 'user_id', '{{%user}}', 'id');
+
+        $this->insert('{{%user}}', [
             'email' => 'admin@elar.ru',
             'password' => '$2y$13$NOgbv0eU27dbF3PsJqNjFOxofvbU0NA4Gd9XDUc0N6DJeeeQx7.TK', // superpass
             'authKey' => 'hlpP-x3B6lNc_t3Lm9PAG8Wano_WYUOh',
@@ -40,6 +43,10 @@ class m210204_111933_create_admin_user extends Migration
      */
     public function safeDown()
     {
-
+        $this->dropForeignKey('user_assignment', '{{%auth_assignment}}');
+        $this->alterColumn('{{%auth_assignment}}', 'user_id', $this->string(64)->notNull());
+        $auth = Yii::$app->authManager;
+        $auth->removeAll();
+        $this->delete('{{%user}}', ['email' => 'admin@elar.ru']);
     }
 }
