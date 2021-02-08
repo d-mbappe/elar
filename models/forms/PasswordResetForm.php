@@ -8,8 +8,17 @@ use yii\base\Model;
 
 class PasswordResetForm extends Model
 {
+    /**
+     * @var string
+     */
     public $oldPassword;
+    /**
+     * @var string
+     */
     public $newPassword;
+    /**
+     * @var string
+     */
     public $newPasswordRepeat;
 
     /**
