@@ -10,18 +10,47 @@ use yii\base\UserException;
 
 class SignUpForm extends User
 {
-    public static function tableName()
+    /**
+     * @return string
+     */
+    public static function tableName(): string
     {
         return 'user';
     }
 
+    /**
+     * @var string
+     */
     public $passwordRepeat;
+
+    /**
+     * @var string
+     */
     public $name;
+
+    /**
+     * @var string
+     */
     public $surname;
+
+    /**
+     * @var string
+     */
     public $patronymic;
+
+    /**
+     * @var string
+     */
     public $phone;
+
+    /**
+     * @var string
+     */
     public $birthdate;
 
+    /**
+     * @return array
+     */
     public function rules(): array
     {
         return [

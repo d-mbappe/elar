@@ -60,7 +60,8 @@ class AuthController extends Controller
     public function actionSignUp(): SignUpForm
     {
         $model = new SignUpForm();
-        if ($model->load(Yii::$app->request->getBodyParams(), '') && $model->register()) {
+        $model->load(Yii::$app->request->getBodyParams());
+        if ($model->register()) {
             $token = $this->tokenService->generateEmailConfirmationToken($model->id);
             $token->save();
             MailSendHelper::sendEmailConfirmationMessage($model->email, $token->code);
@@ -77,7 +78,8 @@ class AuthController extends Controller
     public function actionSignIn(): ?User
     {
         $model = new SignInForm();
-        if ($model->load(Yii::$app->request->getBodyParams(), '') && $model->validate()) {
+        $model->load(Yii::$app->request->getBodyParams());
+        if ($model->validate()) {
             return $model->getUser();
         }
         throw new UserException(json_encode($model->errors));
