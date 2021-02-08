@@ -3,6 +3,7 @@ return [
     'enablePrettyUrl' => true,
     'showScriptName' => false,
     'rules' => [
-        'PATCH profile' => 'profile/update'
+        'PATCH profile' => 'profile/update',
+        '/' => 'site/index'
     ],
 ];
