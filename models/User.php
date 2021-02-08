@@ -4,7 +4,6 @@ namespace app\models;
 
 use Yii;
 use yii\base\Exception;
-use yii\base\InvalidConfigException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -24,8 +23,6 @@ use yii\web\IdentityInterface;
  * @property int            $updatedAt
  *
  * @property Profile        $profile
- * @property UserGroup[]    $userGroups
- * @property Group[]        $groups
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -160,27 +157,6 @@ class User extends ActiveRecord implements IdentityInterface
     public function getProfile(): ActiveQuery
     {
         return $this->hasOne(Profile::class, ['user_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[UserGroups]].
-     *
-     * @return ActiveQuery
-     */
-    public function getUserGroups(): ActiveQuery
-    {
-        return $this->hasMany(UserGroup::class, ['userId' => 'id']);
-    }
-
-    /**
-     * Gets query for [[Users]].
-     *
-     * @return ActiveQuery
-     * @throws InvalidConfigException
-     */
-    public function getGroups(): ActiveQuery
-    {
-        return $this->hasMany(Group::class, ['id' => 'groupId'])->viaTable('user_group', ['userId' => 'id']);
     }
 
 }
