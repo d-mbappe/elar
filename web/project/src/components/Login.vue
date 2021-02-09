@@ -3,7 +3,7 @@
 
         <form @submit.prevent="login">
             <InputCustom v-model="email" name="Ваш логин" isRequired="true" helper=""/>
-            <InputCustom v-model="password" name="Ваш пароль" isRequired="true" isType="password" helper="Минимум 6 символов"/>
+            <InputCustom v-model="password" name="Ваш пароль" isRequired="true" isType="password" :autocomplete="'on'" helper="Минимум 6 символов"/>
 
 
             <div class="login__social">
@@ -44,7 +44,12 @@
                 let password = this.password;
 
                 this.$store.dispatch('login', { email, password })
-                    .then(() => this.$router.push('/main'))
+                    .then( res => {
+                        if(res.status === 200) {
+                            this.$store.dispatch('getUser');
+                            this.$router.push('/main')
+                        }
+                    })
                     .catch(err => console.log(err))
             }
         }

@@ -1,6 +1,8 @@
 <template>
     <section class="navigation">
-         <div v-if="auth"
+        <!--         <div v-if="auth"-->
+         <div v-if="!isLoggedIn1"
+
               class="navigation__auth"
          >
             <div class="navigation__auth__region">
@@ -16,28 +18,95 @@
          <div v-else
               class="navigation__auth-none"
          >
-            ss
+             <div class="navigation__auth-none-left">
+                 <ul class="navigation__link">
+                     <li class="navigation__link__title"><a href="">Записаться в колонну</a></li>
+                     <li class="navigation__link__title"><a href="">Список колонн</a></li>
+                     <li class="navigation__link__title"><a href="">Мои анкеты</a></li>
+                     <li class="navigation__link__title"><a href="">О проекта</a></li>
+                 </ul>
+             </div>
+
+             <div class="navigation__auth-none-right">
+                 <div class="navigation__user"><a href="">{{profile1.surname}} {{profile1.name}}</a></div>
+
+                 <div class="navigation__logout"><button @click="logout">Выйти</button></div>
+
+                 <div class="navigation__social">
+             </div>
+
+
+             </div>
+
          </div>
     </section>
 </template>
 
 <script>
     import SelectCustom from "./SelectCustom";
+    import { mapGetters } from 'vuex';
+
     export default {
         name: "NavigationMenu",
         components: {SelectCustom},
+
         data() {
             return {
-                auth: true,
+                auth: false,
                 value:"Москва",
                 cities: ['Москва', 'Киев', 'Санкт-Петербург'],
                 isActive: true,
-                // cities: [
-                //     { id: 1, name: 'Москва' },
-                //     { id: 2, name: 'Киев' },
-                // ]
+                isLoggedIn: '',
+                // profile: {}
+                // user: {
+                //     // name: 'Леонид',
+                //     // surname: 'Терехов'
+                // }
+
             }
-        }
+        },
+
+        mounted() {
+            console.log('moubt')
+            console.log(this.profile1);
+            console.log(this.isLoggedIn)
+            // this.getUser();
+          // this.isLoggedIn ? this.user = this.$store.dispatch('getUser') : '' ;
+        },
+
+        computed: {
+            ...mapGetters({
+                isLoggedIn1: 'isLoggedIn',
+                profile1: 'profile'
+            })
+            // isLoggedIn : function(){
+            //     return this.$store.getters['isLoggedIn']
+            // },
+
+            // profile: function () {
+            //     return this.$store.getters['profile']
+            // }
+
+        },
+
+        methods: {
+            logout() {
+                this.$store.dispatch('logout')
+
+                this.$store.dispatch('logout')
+                    .then(() => this.$router.push('/'))
+                    .catch(err => console.log(err))
+            },
+
+            getUser() {
+                if(this.isLoggedIn) {
+                    // this.user = this.$store.dispatch('getUser');
+                    // console.log(111)
+                    // console.log(this.user)
+                }
+
+            }
+        },
     }
 </script>
 
@@ -54,6 +123,8 @@
     z-index: -1;
     font-size: 16px;
 
+    padding: 8px 50px;
+
     color: $white;
     background: $white;
     background: linear-gradient(45deg, black, transparent);
@@ -69,12 +140,38 @@
         justify-content: space-between;
 
         &__region {
-            padding: 8px 50px;
+            /*padding: 8px 50px;*/
         }
 
         &__cabinet {
-            padding: 8px 50px;
+            /*padding: 8px 50px;*/
         }
+    }
+
+    &__auth-none {
+        display: flex;
+        justify-content: space-between;
+
+        &-left {
+
+        }
+
+        &-right {
+            display: flex;
+        }
+    }
+
+    &__link {
+        display: flex;
+        margin: 0 25px;
+
+        &__title {
+            margin-left: 25px;
+        }
+    }
+
+    &__logout {
+        margin-left: 25px;
     }
 
 }

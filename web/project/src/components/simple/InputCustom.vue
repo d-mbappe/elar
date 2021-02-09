@@ -1,7 +1,12 @@
 <template>
     <div class="page">
         <label class="field">
-            <input :type="pass" :value="value" @input="updateData($event.target.value)" class="field__input" placeholder="1">
+            <input :type="pass"
+                   :value="value"
+                   :autocomplete="autocomplete"
+                   @input="updateData($event.target.value)"
+                   class="field__input"
+                   :placeholder="1">
             <span class="field__label-wrap">
                 <span class="field__label " :class="{required : required}">{{content}}</span>
             </span>
@@ -35,6 +40,10 @@
             },
             isType: {
                 type: String,
+            },
+            autocomplete: {
+                type: String,
+                default: 'off',
             }
         },
 

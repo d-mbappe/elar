@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-    <NavigationMenu/>
+    <Header/>
 
     <router-view/>
 
@@ -9,10 +9,10 @@
 </template>
 
 <script>
-  import NavigationMenu from "./components/Header";
+  import Header from "./components/Header";
   export default {
     name: "App",
-    components: {NavigationMenu},
+    components: {Header},
 
   }
 </script>
