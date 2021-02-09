@@ -11,8 +11,9 @@ export default new Vuex.Store({
         token: localStorage.getItem('token') || '',
         user: {},
 
-        url: 'http://elar.loc/auth/sign-in',
-    }, mutations: {
+    },
+
+    mutations: {
         auth_request(state) {
             state.status = 'loading'
         },
@@ -35,7 +36,7 @@ export default new Vuex.Store({
         login({commit}, user) {
             return new Promise((resolve, reject) => {
                 commit('auth_request')
-                axios({url: 'http://elar.loc/auth/sign-in', data: user, method: 'POST'})
+                axios({url: '/auth/sign-in', data: user, method: 'POST'})
                     .then(resp => {
                         const token = resp.data.token
                         const user = resp.data.user
@@ -69,7 +70,7 @@ export default new Vuex.Store({
         register({commit}, user) {
             return new Promise((resolve, reject) => {
                 commit('auth_request')
-                axios({url: 'http://elar.loc/auth/sign-up', data: user, method: 'POST'})
+                axios({url: '/auth/sign-up', data: user, method: 'POST'})
                     .then(resp => {
                         const token = resp.data.token
                         const user = resp.data.user

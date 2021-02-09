@@ -1,10 +1,10 @@
 <template>
     <form @submit.prevent="register">
         <InputCustom v-model="user.email" name="Ваш email" isRequired="true" helper="" />
-        <InputCustom v-model="user.telephone" name="Ваш телефон" data="" />
+        <InputCustom v-model="user.phone" name="Ваш телефон" data="" />
         <InputCustom v-model="user.password" name="Ваш пароль" data="" isRequired="true" isType="password" helper="Минимум 6 символов"/>
-        <InputCustom v-model="user.confirmPass" name="Подтвердите пароль" data="" isRequired="true" isType="password" />
-        <InputCustom v-model="user.birthday" name="Дата рождения" data="дд.мм.гг" isRequired="" />
+        <InputCustom v-model="user.passwordRepeat" name="Подтвердите пароль" data="" isRequired="true" isType="password" />
+        <InputCustom v-model="user.birthdate" name="Дата рождения" data="дд.мм.гг" isRequired="" isType="date" />
         <InputCustom v-model="user.name" name="Ваше имя" data="" isRequired="true" />
         <InputCustom v-model="user.surname" name="Ваша фамилия" data="" isRequired="true" />
         <InputCustom v-model="user.patronymic" name="Ваше отчество" data="" isRequired="true" />
@@ -30,10 +30,10 @@
             return {
                 user: {
                     email: '',
-                    telephone: '',
+                    phone: '',
                     password: '',
-                    confirmPass: '',
-                    birthday: '',
+                    passwordRepeat: '',
+                    birthdate: '',
                     name: '',
                     surname: '',
                     patronymic: '',
@@ -43,7 +43,8 @@
 
         methods: {
             register() {
-                let newUser = this.user
+                let newUser = this.user;
+
                 this.$store.dispatch('register', newUser)
                     .then(() => this.$router.push('/main'))
                     .catch(err => console.log(err))
@@ -84,11 +85,11 @@
 
         &:hover {
             box-shadow: 0 0 10px rgba(0,0,0,0.4) inset;
-         }
+        }
 
         &:active, &:focus {
-           box-shadow: 0 0 10px rgba(0,0,0,0.8) inset;
+            box-shadow: 0 0 10px rgba(0,0,0,0.8) inset;
 
-       }
+        }
     }
 </style>

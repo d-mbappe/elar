@@ -3,15 +3,15 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import Axios from 'axios'
+import axios from 'axios'
 
 
 Vue.config.productionTip = false
-Vue.prototype.$http = Axios;
+Vue.prototype.$http = axios;
 
-Axios.defaults.baseURL = 'http://elar.loc/auth/sign-in';
+axios.defaults.baseURL = 'http://elar.loc';
 // Axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-Axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 const token = localStorage.getItem('token')
 

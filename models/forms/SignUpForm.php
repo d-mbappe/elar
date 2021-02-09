@@ -73,7 +73,7 @@ class SignUpForm extends User
     public function register(): bool
     {
         if (!$this->validate()) {
-            throw new UserException(json_encode($this->errors));
+            throw new UserException(urldecode(json_encode($this->errors)));
         } else {
             $this->generateAccessToken(86400);
             $this->generateAuthKey();

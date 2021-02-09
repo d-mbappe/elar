@@ -60,7 +60,7 @@ class AuthController extends Controller
     public function actionSignUp(): SignUpForm
     {
         $model = new SignUpForm();
-        $model->load(Yii::$app->request->getBodyParams());
+        $model->load(Yii::$app->request->getBodyParams(), '');
         if ($model->register()) {
             $token = $this->tokenService->generateEmailConfirmationToken($model->id);
             $token->save();
@@ -75,10 +75,10 @@ class AuthController extends Controller
      * @throws InvalidConfigException
      * @throws UserException
      */
-    public function actionSignIn(): ?User
+    public function actionSignIn()
     {
         $model = new SignInForm();
-        $model->load(Yii::$app->request->getBodyParams());
+        $model->load(Yii::$app->request->getBodyParams(), '');
         if ($model->validate()) {
             return $model->getUser();
         }

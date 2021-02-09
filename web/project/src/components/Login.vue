@@ -5,6 +5,15 @@
             <InputCustom v-model="email" name="Ваш логин" isRequired="true" helper=""/>
             <InputCustom v-model="password" name="Ваш пароль" isRequired="true" isType="password" helper="Минимум 6 символов"/>
 
+
+            <div class="login__social">
+                <p class="login__social__title">Войти через соцсети:</p>
+
+                <a :href="baseURL + 'vk/get-auth-link'"><img class="login__social__icon" src="../assets/icons/vk-logo.svg" alt=""></a>
+                <a :href="baseURL + 'ok/get-auth-link'"><img class="login__social__icon" src="../assets/icons/ok-logo.svg" alt=""></a>
+                <a :href="baseURL + 'facebook/get-auth-link'"><img class="login__social__icon" src="../assets/icons/facebook-logo.svg" alt=""></a>
+            </div>
+
             <button type="submit" class="login-btn">
                 Войти
             </button>
@@ -23,7 +32,9 @@
         data() {
             return{
                 email: '',
-                password: ''
+                password: '',
+                baseURL: this.$http.defaults.baseURL
+
             }
         },
 
@@ -44,6 +55,27 @@
 <style lang="scss" scoped>
     @import "../assets/variables";
 
+
+    img {
+        width: 20px;
+    }
+    .login {
+        color: $white;
+    }
+
+    .login__social {
+        margin-top: 25px;
+        display: flex;
+        align-items: center;
+
+        &__icon {
+            margin-left: 7px;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
 
     .login-btn {
         border:none;
@@ -72,8 +104,7 @@
      }
 
     &:active, &:focus {
-                   box-shadow: 0 0 10px rgba(0,0,0,0.8) inset;
-
-               }
+        box-shadow: 0 0 10px rgba(0,0,0,0.8) inset;
+        }
     }
 </style>
