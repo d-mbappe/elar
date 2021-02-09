@@ -3,7 +3,12 @@ return [
     'enablePrettyUrl' => true,
     'showScriptName' => false,
     'rules' => [
-        'PATCH profile' => 'profile/update',
-        '/' => 'site/index'
+        'api/<controller:\w+>/<action:(\w|-)+>' => '<controller>/<action>',
+        'api/<controller:\w+>/' => '<controller>/index',
+        'rbac/<controller:\w+>/<action:(\w|-)+>' => 'rbac/<controller>/<action>',
+        'rbac/<controller:\w+>' => 'rbac/<controller>/index',
+        '<a>' => 'site/index',
+        '<a>/<b>' => 'site/index',
+        '<a>/<b>/<c>' => 'site/index',
     ],
 ];
