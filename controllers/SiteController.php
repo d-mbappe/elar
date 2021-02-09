@@ -56,7 +56,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->renderFile('@app/web/vue/dist/index.html');
+        return $this->renderFile('@app/web/project/dist/index.html');
     }
 
     /**

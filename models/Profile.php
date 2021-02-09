@@ -44,7 +44,7 @@ class Profile extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['userId', 'name', 'surname', 'patronymic'], 'required'],
+            [['userId', 'name', 'surname'], 'required'],
             [['userId'], 'integer'],
             [['birthdate'], 'safe'],
             [['location'], 'string'],

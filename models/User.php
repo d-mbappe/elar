@@ -21,6 +21,8 @@ use yii\web\IdentityInterface;
  * @property int            $status
  * @property int            $createdAt
  * @property int            $updatedAt
+ * @property string         $from
+ * @property string         $uuid
  *
  * @property Profile        $profile
  */
@@ -28,6 +30,10 @@ class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
+
+    const FROM_SITE = 'from_site';
+    const FROM_VK = 'from_vk';
+    const FROM_OK = 'from_ok';
 
     /**
      * @inheritdoc
@@ -57,9 +63,10 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules(): array
     {
         return [
-
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['from', 'default', 'value' => self::FROM_SITE],
+            ['from', 'in', 'range' => [self::FROM_SITE, self::FROM_OK, self::FROM_VK]],
         ];
     }
 

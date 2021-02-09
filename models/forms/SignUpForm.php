@@ -5,6 +5,7 @@ namespace app\models\forms;
 
 use app\models\Profile;
 use app\models\User;
+use Yii;
 use yii\base\Exception;
 use yii\base\UserException;
 
@@ -48,6 +49,10 @@ class SignUpForm extends User
      */
     public $birthdate;
 
+    const SCENARIO_FROM_SITE = 'from_site';
+    const SCENARIO_FROM_VK = 'from_vk';
+    const SCENARIO_FROM_OK = 'from_ok';
+
     /**
      * @return array
      */
@@ -56,11 +61,14 @@ class SignUpForm extends User
         return [
             [['email'], 'email'],
             [['email'], 'unique'],
-            [['email', 'password', 'passwordRepeat', 'name', 'surname', 'patronymic'], 'required'],
+            [['name', 'surname'], 'required'],
+            [['email', 'password', 'passwordRepeat'], 'required', 'on' => self::SCENARIO_FROM_SITE],
             [['password', 'passwordRepeat', 'name', 'surname', 'patronymic', 'phone'], 'string', 'max' => 255],
             [['password'], 'string', 'min'=> 6, 'max' => 255],
-            [['birthdate'], 'date', 'format' => 'php:d.m.Y'],
-            ['password', 'compare', 'compareAttribute' => 'passwordRepeat', 'message' => 'Пароли должны совпадать'],
+            [['birthdate'], 'date', 'format' => 'php:d.m.Y', 'on' => self::SCENARIO_FROM_SITE],
+            [['birthdate'], 'date', 'format' => 'php:Y-m-d', 'on' => self::SCENARIO_FROM_OK],
+            [['birthdate'], 'date', 'format' => 'php:d.n.Y', 'on' => self::SCENARIO_FROM_VK],
+            ['password', 'compare', 'compareAttribute' => 'passwordRepeat', 'message' => 'Пароли должны совпадать', 'on' => self::SCENARIO_FROM_SITE],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
         ];
     }
@@ -77,7 +85,11 @@ class SignUpForm extends User
         } else {
             $this->generateAccessToken(86400);
             $this->generateAuthKey();
-            $this->setPassword($this->password);
+            if ($this->getScenario() === self::SCENARIO_FROM_SITE) {
+                $this->setPassword($this->password);
+            } else {
+                $this->setPassword(Yii::$app->security->generateRandomString());
+            }
             if (!$this->save(false)) {
                 return false;
             }
@@ -93,7 +105,7 @@ class SignUpForm extends User
             ], '');
 
             if (!$profileModel->save()) {
-                return false;
+                print_r($profileModel->errors); die;
             }
 
             return true;
