@@ -20,7 +20,7 @@ class OkController extends Controller
         $url = 'http://www.odnoklassniki.ru/oauth/authorize';
         $params = [
             'client_id'     => Yii::$app->params['OKClientId'],
-            'redirect_uri'  => Url::base(true).'/ok/auth',
+            'redirect_uri'  => Url::base(true).'/api/ok/auth',
             'response_type' => 'code'
         ];
         return $url . '?' . urldecode(http_build_query($params));

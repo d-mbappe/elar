@@ -20,7 +20,7 @@ class VkController extends Controller
         $url = 'http://oauth.vk.com/authorize';
         $params = [
             'client_id'     => Yii::$app->params['VKClientId'],
-            'redirect_uri'  => Url::base(true).'/vk/auth',
+            'redirect_uri'  => Url::base(true).'/api/vk/auth',
             'response_type' => 'code'
         ];
         return $url . '?' . urldecode(http_build_query($params));
