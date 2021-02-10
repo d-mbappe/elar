@@ -60,6 +60,7 @@ class AuthController extends Controller
     public function actionSignUp(): SignUpForm
     {
         $model = new SignUpForm();
+        $model->setScenario(SignUpForm::SCENARIO_FROM_SITE);
         $model->load(Yii::$app->request->getBodyParams(), '');
         if ($model->register()) {
             $token = $this->tokenService->generateEmailConfirmationToken($model->id);
