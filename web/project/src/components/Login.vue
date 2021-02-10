@@ -9,9 +9,9 @@
             <div class="login__social">
                 <p class="login__social__title">Войти через соцсети:</p>
 
-                <a :href="baseURL + 'vk/get-auth-link'"><img class="login__social__icon" src="../assets/icons/vk-logo.svg" alt=""></a>
-                <a :href="baseURL + 'ok/get-auth-link'"><img class="login__social__icon" src="../assets/icons/ok-logo.svg" alt=""></a>
-                <a :href="baseURL + 'facebook/get-auth-link'"><img class="login__social__icon" src="../assets/icons/facebook-logo.svg" alt=""></a>
+                <a :href="socialURL[0].url"><img class="login__social__icon" src="../assets/icons/vk-logo.svg" alt=""></a>
+                <a :href="socialURL[1].url"><img class="login__social__icon" src="../assets/icons/ok-logo.svg" alt=""></a>
+                <a :href="socialURL[2].url"><img class="login__social__icon" src="../assets/icons/facebook-logo.svg" alt=""></a>
             </div>
 
             <button type="submit" class="login-btn">
@@ -25,6 +25,7 @@
 
 <script>
     import InputCustom from "./simple/InputCustom";
+    import {AXIOS} from "../store/axios";
 
     export default {
         name: "Login",
@@ -33,16 +34,37 @@
             return{
                 email: '',
                 password: '',
-                baseURL: this.$http.defaults.baseURL
-
+                social: ['vk', 'ok', 'facebook'],
+                socialURL: [{
+                    name: 'vk',
+                    url: null
+                }, {
+                    name: 'ok',
+                    url: null
+                }, {name: 'facebook',
+                    url: null }]
             }
         },
 
+        computed: {
+
+        },
+
         methods: {
+            async getUrl(social) {
+                 AXIOS.get('/api/' + social.name + '/get-auth-link')
+                        .then(resp => {
+                            social.url = resp.data
+                        })
+                        .catch(err => {
+                            console.log(555)
+                            // reject(err)
+                        })
+            },
+
             login: function () {
                 let email = this.email;
                 let password = this.password;
-                console.log( { email, password })
 
                 this.$store.dispatch('login', { email, password })
                     .then( res => {
@@ -54,6 +76,10 @@
                     })
                     .catch(err => console.log(err))
             }
+        },
+
+        created() {
+             this.socialURL.forEach( item => this.getUrl(item))
         }
 
     }
