@@ -1,54 +1,18 @@
 <template>
     <section class="navigation">
-        <!--         <div v-if="auth"-->
-         <div v-if="!isLoggedIn1"
-
-              class="navigation__auth"
-         >
-            <div class="navigation__auth__region">
-                <label for="city" class="region__title">Ваш регион: </label>
-                <SelectCustom id="city" v-model="value" :select-list="cities"/>
-
-            </div>
-             <div class="navigation__auth__cabinet">
-                 <a href="#">Личный кабинет</a>
-             </div>
-         </div>
-
-         <div v-else
-              class="navigation__auth-none"
-         >
-             <div class="navigation__auth-none-left">
-                 <ul class="navigation__link">
-                     <li class="navigation__link__title"><a href="">Записаться в колонну</a></li>
-                     <li class="navigation__link__title"><a href="">Список колонн</a></li>
-                     <li class="navigation__link__title"><a href="">Мои анкеты</a></li>
-                     <li class="navigation__link__title"><a href="">О проекта</a></li>
-                 </ul>
-             </div>
-
-             <div class="navigation__auth-none-right">
-                 <div class="navigation__user"><a href="">{{profile1.surname}} {{profile1.name}}</a></div>
-
-                 <div class="navigation__logout"><button @click="logout">Выйти</button></div>
-
-                 <div class="navigation__social">
-             </div>
-
-
-             </div>
-
-         </div>
+        <HeaderAuth v-if="!isLoggedIn"/>
+        <HeaderNoneAuth v-else/>
     </section>
 </template>
 
 <script>
     import SelectCustom from "./SelectCustom";
-    import { mapGetters } from 'vuex';
+    import HeaderAuth from "./HeaderAuth";
+    import HeaderNoneAuth from "./HeaderNoneAuth";
 
     export default {
-        name: "NavigationMenu",
-        components: {SelectCustom},
+        name: "Header",
+        components: {HeaderAuth, SelectCustom, HeaderNoneAuth},
 
         data() {
             return {
@@ -56,7 +20,6 @@
                 value:"Москва",
                 cities: ['Москва', 'Киев', 'Санкт-Петербург'],
                 isActive: true,
-                isLoggedIn: '',
                 // profile: {}
                 // user: {
                 //     // name: 'Леонид',
@@ -67,26 +30,12 @@
         },
 
         mounted() {
-            console.log('moubt')
-            console.log(this.profile1);
-            console.log(this.isLoggedIn)
-            // this.getUser();
-          // this.isLoggedIn ? this.user = this.$store.dispatch('getUser') : '' ;
         },
 
         computed: {
-            ...mapGetters({
-                isLoggedIn1: 'isLoggedIn',
-                profile1: 'profile'
-            })
-            // isLoggedIn : function(){
-            //     return this.$store.getters['isLoggedIn']
-            // },
-
-            // profile: function () {
-            //     return this.$store.getters['profile']
-            // }
-
+            isLoggedIn : function(){
+                return this.$store.getters['isLoggedIn']
+            },
         },
 
         methods: {
@@ -100,9 +49,6 @@
 
             getUser() {
                 if(this.isLoggedIn) {
-                    // this.user = this.$store.dispatch('getUser');
-                    // console.log(111)
-                    // console.log(this.user)
                 }
 
             }
@@ -140,11 +86,9 @@
         justify-content: space-between;
 
         &__region {
-            /*padding: 8px 50px;*/
         }
 
         &__cabinet {
-            /*padding: 8px 50px;*/
         }
     }
 

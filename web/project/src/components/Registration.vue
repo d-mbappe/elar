@@ -44,9 +44,15 @@
         methods: {
             register() {
                 let newUser = this.user;
+                console.log(newUser)
 
                 this.$store.dispatch('register', newUser)
-                    .then(() => this.$router.push('/main'))
+                    .then( res => {
+                        if(res.status === 200) {
+                            this.$store.dispatch('getUser');
+                            this.$router.push('/main')
+                        }
+                    })
                     .catch(err => console.log(err))
             }
         }

@@ -42,9 +42,11 @@
             login: function () {
                 let email = this.email;
                 let password = this.password;
+                console.log( { email, password })
 
                 this.$store.dispatch('login', { email, password })
                     .then( res => {
+                        console.log(res)
                         if(res.status === 200) {
                             this.$store.dispatch('getUser');
                             this.$router.push('/main')

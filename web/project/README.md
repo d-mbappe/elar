@@ -17,3 +17,7 @@ npm run build
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+Необходимы версии: @vue/cli >=3, node.js >=6
+
+Создать конфиг .env в /project на основе примера и добавить необходимый url

@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import {AXIOS} from './axios'
-// import AXIOS from "AXIOS";
 
 
 Vue.use(Vuex)
@@ -42,7 +41,7 @@ export default new Vuex.Store({
 
     actions: {
         /*LOGIN*/
-        login({commit}, user) {
+        login({commit, state}, user) {
             return new Promise((resolve, reject) => {
                 commit('auth_request')
                 AXIOS.post('/api/auth/sign-in',  user)
@@ -51,9 +50,8 @@ export default new Vuex.Store({
                         const user = resp.data.user
 
                         localStorage.setItem('token', resp.data.accessToken)
-                        // AXIOS.defaults.headers.common['Authorization'] = token
-
                         commit('auth_success', token, user)
+                        AXIOS.defaults.headers.common['Authorization'] = 'Bearer ' + state.token
                         resolve(resp)
 
                     })
@@ -76,16 +74,19 @@ export default new Vuex.Store({
         },
 
         /*REGISTER*/
-        register({commit}, user) {
+        register({commit, state}, user) {
             return new Promise((resolve, reject) => {
                 commit('auth_request')
                 AXIOS.post( '/api/auth/sign-up',  user)
                     .then(resp => {
-                        const token = resp.data.token
+                        const token = resp.data.accessToken
                         const user = resp.data.user
+
                         localStorage.setItem('token', resp.data.accessToken)
-                        AXIOS.defaults.headers.common['Authorization'] = token
+                        // AXIOS.defaults.headers.common['Authorization'] = token
                         commit('auth_success', token, user)
+                        AXIOS.defaults.headers.common['Authorization'] = 'Bearer ' + state.token
+
                         resolve(resp)
                     })
                     .catch(err => {
@@ -96,33 +97,20 @@ export default new Vuex.Store({
             })
         },
 
-        getUser(context) {
+        getUser({commit, state}, ) {
+
             return new Promise((resolve, reject) => {
-                console.log('getUser')
-                // commit('auth_request')
+
                 AXIOS.get('/api/profile')
                     .then(resp => {
-                        context.profile = resp.data
-                        console.log('user')
-                        console.log(context.profile)
-                        // resolve(resp)
-                        // console.log('user')
-                        // console.log(resp.data)
+                        resp.data ? state.profile = resp.data : state.profile = {}
+
                     })
                     .catch(err => {
                         commit('auth_error', err)
                         reject(err)
                     })
             })
-            //     AXIOS
-            //         .get('/profile', {
-            //             headers: {
-            //                 'Content-Type': 'application/json',
-            //                 'Authorization': 'Bearer '+ state.token
-            //             }
-            //         })
-            //         .then(response => (this.info = response));
-            // }
 
         }
     },
