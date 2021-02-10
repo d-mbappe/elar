@@ -34,7 +34,7 @@ class OkController extends Controller
     {
         $params = [
             'code' => $code,
-            'redirect_uri' => Url::base(true).'/ok/auth',
+            'redirect_uri' => Url::base(true).'/api/ok/auth',
             'grant_type' => 'authorization_code',
             'client_id' => Yii::$app->params['OKClientId'],
             'client_secret' => Yii::$app->params['OKPrivateKey']
