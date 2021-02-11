@@ -65,7 +65,7 @@ class SignUpForm extends User
             [['email', 'password', 'passwordRepeat'], 'required', 'on' => self::SCENARIO_FROM_SITE],
             [['password', 'passwordRepeat', 'name', 'surname', 'patronymic', 'phone'], 'string', 'max' => 255],
             [['password'], 'string', 'min'=> 6, 'max' => 255],
-            [['birthdate'], 'date', 'format' => 'php:d.m.Y', 'on' => self::SCENARIO_FROM_SITE],
+            [['birthdate'], 'date', 'format' => 'php:Y-m-d', 'on' => self::SCENARIO_FROM_SITE],
             [['birthdate'], 'date', 'format' => 'php:Y-m-d', 'on' => self::SCENARIO_FROM_OK],
             [['birthdate'], 'date', 'format' => 'php:d.n.Y', 'on' => self::SCENARIO_FROM_VK],
             ['password', 'compare', 'compareAttribute' => 'passwordRepeat', 'message' => 'Пароли должны совпадать', 'on' => self::SCENARIO_FROM_SITE],
