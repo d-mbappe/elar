@@ -57,8 +57,7 @@
                             social.url = resp.data
                         })
                         .catch(err => {
-                            console.log(555)
-                            // reject(err)
+                            reject(err)
                         })
             },
 
@@ -89,55 +88,55 @@
     @import "../assets/variables";
 
 
-    img {
-        width: 20px;
-    }
-    .login {
-        color: $white;
-    }
+img {
+width: 20px;
+}
+.login {
+color: $white;
+}
 
-    .login__social {
-        margin-top: 25px;
-        display: flex;
-        align-items: center;
+.login__social {
+margin-top: 25px;
+display: flex;
+align-items: center;
 
-        &__icon {
-            margin-left: 7px;
-
-            &:hover {
-                opacity: 0.8;
-            }
-        }
-    }
-
-    .login-btn {
-        border:none;
-        -webkit-box-shadow: none;
-        -moz-box-shadow: none;
-        box-shadow: none;
-        /**/
-        cursor: pointer;
-        margin-top: 15px;
-
-        width: 100%;
-        background: $white;
-
-        min-height: 50px;
-
-        font-family: 'Roboto Slab', sans-serif;
-        font-size: 15px;
-        font-weight: 700;
-        color: $black;
-        text-align: center;
-
-        border-radius: 5px;
+&__icon {
+    margin-left: 7px;
 
     &:hover {
-         box-shadow: 0 0 10px rgba(0,0,0,0.4) inset;
-     }
-
-    &:active, &:focus {
-        box-shadow: 0 0 10px rgba(0,0,0,0.8) inset;
-        }
+        opacity: 0.8;
     }
+}
+}
+
+.login-btn {
+border:none;
+-webkit-box-shadow: none;
+-moz-box-shadow: none;
+box-shadow: none;
+/**/
+cursor: pointer;
+margin-top: 15px;
+
+width: 100%;
+background: $white;
+
+min-height: 50px;
+
+font-family: 'Roboto Slab', sans-serif;
+font-size: 15px;
+font-weight: 700;
+color: $black;
+text-align: center;
+
+border-radius: 5px;
+
+&:hover {
+ box-shadow: 0 0 10px rgba(0,0,0,0.4) inset;
+}
+
+&:active, &:focus {
+box-shadow: 0 0 10px rgba(0,0,0,0.8) inset;
+}
+}
 </style>

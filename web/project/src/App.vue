@@ -75,6 +75,7 @@ body {
 
 /* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
 ul[class],
+li[class],
 ol[class] {
   list-style: none;
 }

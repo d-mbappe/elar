@@ -62,40 +62,40 @@
 <style lang="scss" scoped>
     @import "../assets/variables";
 
-    .registration__policy {
-        margin-top: 30px;
+.registration__policy {
+    margin-top: 30px;
 
-        font-size: 14px;
-        color: $white;
+    font-size: 14px;
+    color: $white;
 
-        &-link {
-            font-weight: 700;
-            text-decoration: underline;
-        }
-    }
-    .registration-btn {
-        margin-top: 15px;
-
-        width: 100%;
-        background: $white;
-
-        min-height: 50px;
-
-        font-family: 'Roboto Slab', sans-serif;
-        font-size: 15px;
+    &-link {
         font-weight: 700;
-        color: $black;
-        text-align: center;
-
-        border-radius: 5px;
-
-        &:hover {
-            box-shadow: 0 0 10px rgba(0,0,0,0.4) inset;
-        }
-
-        &:active, &:focus {
-            box-shadow: 0 0 10px rgba(0,0,0,0.8) inset;
-
-        }
+        text-decoration: underline;
     }
+}
+.registration-btn {
+    margin-top: 15px;
+
+    width: 100%;
+    background: $white;
+
+    min-height: 50px;
+
+    font-family: 'Roboto Slab', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: $black;
+    text-align: center;
+
+    border-radius: 5px;
+
+    &:hover {
+        box-shadow: 0 0 10px rgba(0,0,0,0.4) inset;
+    }
+
+    &:active, &:focus {
+        box-shadow: 0 0 10px rgba(0,0,0,0.8) inset;
+
+    }
+}
 </style>
