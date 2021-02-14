@@ -4,23 +4,26 @@ import router from './router'
 import store from './store'
 
 import axios from 'axios'
+import Vuelidate from 'vuelidate';
+import VueFlashMessage from 'vue-flash-message';
+
+
 
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios;
 
-// axios.defaults.baseURL = 'http://elar.loc';
-// // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-
 const token = localStorage.getItem('token')
-//
-// if (token) {
-//   Vue.prototype.$http.defaults.headers.common['Authorization'] = token
-// }
+
+Vue.use(Vuelidate);
+Vue.use(VueFlashMessage, {
+    messageOptions: {
+        timeout: 2000,
+    }
+});
 
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount('#app')

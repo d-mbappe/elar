@@ -4,21 +4,25 @@
     >
         <div class="navigation__auth-none-left">
             <ul class="navigation__link">
-                <li class="navigation__link__title"><a href="">Записаться в колонну</a></li>
-                <li class="navigation__link__title"><a href="">Список колонн</a></li>
-                <li class="navigation__link__title"><a href="">Мои анкеты</a></li>
-                <li class="navigation__link__title"><a href="">О проекта</a></li>
+                <li class="navigation__link__title"><router-link to="">Записаться в колонну</router-link></li>
+                <li class="navigation__link__title"><router-link to="">Список колонн</router-link></li>
+                <li class="navigation__link__title"><router-link to="">Мои анкеты</router-link></li>
+                <li class="navigation__link__title"><router-link to="">О проекте</router-link></li>
             </ul>
         </div>
 
         <div class="navigation__auth-none-right">
-            <div class="navigation__user"><a href="">{{profile.surname}} {{profile.name}}</a></div>
+            <div class="navigation__user"><router-link to="/account">{{profile.surname}} {{profile.name}}</router-link></div>
 
             <div class="navigation__logout"><button @click="logout">Выйти</button></div>
 
-            <div class="navigation__social">
+            <div class="navigation__icons">
+                <a href=""><img class="" src="../assets/icons/vk-logo.svg" alt=""></a>
+                <a href=""><img class="" src="../assets/icons/facebook-logo.svg" alt=""></a>
+                <a href=""><img class="" src="../assets/icons/ok-logo.svg" alt=""></a>
+                <a href=""><img class="" src="../assets/icons/instagram_logo.svg" alt=""></a>
+                <a href=""><img class="" src="../assets/icons/youtube_logo.svg" alt=""></a>
             </div>
-
 
         </div>
     </div>
@@ -37,6 +41,10 @@
             }
         },
 
+        mounted() {
+           console.log(this.$store.state.profile)
+        },
+
         computed: {
           profile() {
               return this.$store.state.profile
@@ -48,7 +56,7 @@
                 this.$store.dispatch('logout')
 
                 this.$store.dispatch('logout')
-                    .then(() => this.$router.push('/'))
+                    .then(() => this.$router.push('/auth'))
                     .catch(err => console.log(err))
             },
 
@@ -108,12 +116,21 @@
 
         &-right {
             display: flex;
+            min-width: 380px;
+            position: relative;
+
+            img {
+                width: 20px;
+            }
         }
     }
 
     &__link {
         display: flex;
-        margin: 0 25px;
+
+        li:first-of-type {
+            margin-left: 10px;
+        }
 
         &__title {
             margin-left: 25px;
@@ -122,6 +139,23 @@
 
     &__logout {
         margin-left: 25px;
+
+        &:hover {
+            color: $base-hover;
+        }
+    }
+
+    &__icons {
+        display: inline-flex;
+        position: absolute;
+        right: 0;
+
+        img {
+            margin-left: 7px;
+            &:hover {
+                opacity: 0.8;
+            }
+        }
     }
 
 }

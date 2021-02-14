@@ -5,11 +5,20 @@
 
     <router-view/>
 
+    <flash-message></flash-message>
+
+
   </div>
 </template>
 
 <script>
   import Header from "./components/Header";
+  import router from "./router";
+  import store from "./store";
+  require('vue-flash-message/dist/vue-flash-message.min.css');
+
+
+
   export default {
     name: "App",
     components: {Header},
@@ -129,16 +138,6 @@ button {
   cursor: pointer;
 }
 
-/* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */
-/*@media (prefers-reduced-motion: reduce) {*/
-/*  * {*/
-/*    animation-duration: 0.01ms !important;*/
-/*    animation-iteration-count: 1 !important;*/
-/*    transition-duration: 0.01ms !important;*/
-/*    scroll-behavior: auto !important;*/
-/*  }*/
-/*}*/
-
 
 #app {
   font-family: "Roboto", "Roboto Slab", sans-serif;
@@ -149,13 +148,13 @@ button {
 #nav {
   padding: 30px;
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
 }
+
+/*Уведомления*/
+.flash__message {
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+}
+
 </style>
