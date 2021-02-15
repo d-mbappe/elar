@@ -5,12 +5,24 @@
 
         <div class="password__modify__form">
             <form id="profileForm" class="password__modify__form__data">
-                <InputCustom v-model="profile.password" name="Новый пароль" data="" isRequired="" />
-                <InputCustom v-model="profile.passwordRepeat" name="Повтор пароля" data="" isRequired="" />
+                <InputCustom v-model="profile.password"
+                             name="Новый пароль"
+                             data=""
+                             isType="password"
+                             isRequired=""
+                             :isInvalid=" (!$v.profile.password.required || !$v.profile.password.minLength)"
+                />
+                <InputCustom v-model="profile.passwordRepeat"
+                             name="Повтор пароля"
+                             isType="password"
+                             data=""
+                             isRequired=""
+                             :isInvalid=" (!$v.profile.passwordRepeat.required || !$v.profile.passwordRepeat.sameAs ||!$v.profile.passwordRepeat.minLength)"
+                />
             </form>
         </div>
 
-        <button class="password__modify__footer-info__save-btn" @click="saveProfile">
+        <button :disabled=" $v.$invalid" class="password__modify__footer-info__save-btn" @click="saveProfile">
             Сохранить
         </button>
 
@@ -19,6 +31,7 @@
 
 <script>
     import InputCustom from "./simple/InputCustom";
+    import {minLength, required, sameAs} from "vuelidate/lib/validators";
 
     export default {
         name: "NewPassword",
@@ -30,10 +43,27 @@
             }
         },
 
+        validations: {
+            profile: {
+                password: {
+                    required,
+                    minLength: minLength(6)
+                },
+                passwordRepeat: {
+                    required,
+                    minLength: minLength(6),
+                    sameAs: sameAs('password')
+                }
+            }
+
+        },
+
         mounted() {
             this.$store.dispatch('getUser')
             // this.profile = this.$store.state.profile
         },
+
+
 
         computed: {
             profile() {
@@ -59,7 +89,7 @@
         max-height: 655px;
         position: relative;
 
-        font-family: "Roboto Slab", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-weight: 400;
         font-size: 22px;
 
@@ -69,6 +99,9 @@
 
         border-radius: 10px;
 
+        &__title {
+            font-family: "Roboto Slab", sans-serif;
+        }
 
         &__form {
             display: flex;

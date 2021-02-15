@@ -8,11 +8,18 @@
             </div>
 
             <form id="profileForm" class="account__modify__form__data">
-                <InputCustom v-model="profile.name" name="Ваше имя" data="" isRequired="" />
-                <InputCustom v-model="profile.surname" name="Ваша фамилия" data="" isRequired="" />
-                <InputCustom v-model="profile.patronymic" name="Ваше отчество" data="" isRequired="" />
-                <InputCustom v-model="profile.birthdate" name="Дата рождения" data="дд.мм.гг" isRequired="" isType="date" />
-                <InputCustom class="field-wrap location" v-model="profile.location" name="Место жительства" data="" isRequired="" />
+                <InputCustom v-model.trim="profile.name" name="Ваше имя" data="" isRequired="true"
+                             :isInvalid="!$v.profile.name.required || !$v.profile.name.alpha"
+                />
+                <InputCustom v-model.trim="profile.surname" name="Ваша фамилия" data="" isRequired="true"
+                             :isInvalid="!$v.profile.surname.required || !$v.profile.surname.alpha"
+                />
+                <InputCustom v-model.trim="profile.patronymic" name="Ваше отчество" data="" isRequired=""
+                             :isInvalid="!$v.profile.patronymic.alpha"
+                />
+                <InputCustom v-model.trim="profile.birthdate" name="Дата рождения" data="дд.мм.гг" isRequired="" isType="date"
+                />
+                <InputCustom class="field-wrap location" v-model.trim="profile.location" name="Место жительства" data="" isRequired="" />
             </form>
         </div>
 
@@ -39,6 +46,7 @@
 <script>
     import InputCustom from "./simple/InputCustom";
     import Avatar from "../components/Avatar";
+    import {alpha, email, minLength, numeric, required, sameAs} from "vuelidate/lib/validators";
 
     export default {
         name: "Profile",
@@ -49,6 +57,40 @@
                 item: 'Войти',
                 currentTabComponent: 'Login'
             }
+        },
+
+        validations: {
+            profile: {
+                email: {
+                    required,
+                    email
+                },
+                phone: {
+                    numeric
+                },
+                password: {
+                    required,
+                    minLength: minLength(6)
+
+                },
+                passwordRepeat: {
+                    required,
+                    minLength: minLength(6),
+                    sameAs: sameAs('password')
+                },
+                name: {
+                    required,
+                    alpha
+                },
+                surname: {
+                    required,
+                    alpha
+                },
+                patronymic: {
+                    alpha
+                },
+            }
+
         },
 
         mounted() {
@@ -94,7 +136,7 @@
         position: relative;
         background-color: $white;
 
-        font-family: "Roboto Slab", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-weight: 400;
         font-size: 22px;
 
@@ -105,6 +147,7 @@
 
         &__title {
             margin-left: 35px;
+            font-family: "Roboto Slab", sans-serif;
         }
 
         &__form {

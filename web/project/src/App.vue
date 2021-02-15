@@ -8,6 +8,8 @@
     <flash-message></flash-message>
 
 
+
+
   </div>
 </template>
 
@@ -27,7 +29,11 @@
     }
 
   }
+
+
+
 </script>
+
 
 <style lang="scss">
 @import "assets/main.scss";
@@ -136,8 +142,18 @@ button {
   color: inherit;
   background-color: transparent;
   cursor: pointer;
-}
 
+  &:disabled {
+    opacity: 0.8;
+    cursor: not-allowed !important;
+
+    &:hover {
+      box-shadow: none !important;
+    }
+  }
+
+
+}
 
 #app {
   font-family: "Roboto", "Roboto Slab", sans-serif;

@@ -4,14 +4,14 @@
         <form @submit.prevent="login">
             <!--Убирает автвозаполнение полей-->
             <div style="width: 0; height: 0; overflow: hidden"><input type="text"><input type="password"></div>
-            <InputCustom v-model.lazy="email"
+            <InputCustom v-model.trim="email"
                          name="Ваш логин"
                          isRequired="true"
                          helper=""
-                         :isInvalid=" (!$v.email.required || !$v.email.email) && $v.email.$dirty"
+                         :isInvalid=" (!$v.email.required || !$v.email.email)"
             />
 
-            <InputCustom v-model="password"
+            <InputCustom v-model.trim="password"
                          name="Ваш пароль"
                          isRequired="true"
                          isType="password"
@@ -19,7 +19,6 @@
                          helper="Минимум 6 символов"
                          :isInvalid="!$v.password.required || !$v.password.minLength"
             />
-
 
             <div class="login__social">
                 <p class="login__social__title">Войти через соцсети:</p>
@@ -32,7 +31,9 @@
             <button :disabled=" $v.$invalid" type="submit" class="login-btn">
                 Войти
             </button>
+
         </form>
+
 
     </div>
 
@@ -94,8 +95,6 @@
             login: function () {
                 let email = this.email;
                 let password = this.password;
-
-
 
                 this.$store.dispatch('login', { email, password })
                     .then( res => {
@@ -177,13 +176,5 @@ img {
     box-shadow: 0 0 10px rgba(0,0,0,0.8) inset;
     }
 
-    &:disabled {
-        opacity: 0.8;
-        cursor: not-allowed;
-        &:hover {
-            box-shadow: none;
-        }
-
-    }
 }
 </style>

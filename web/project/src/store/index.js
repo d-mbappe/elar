@@ -10,7 +10,8 @@ export default new Vuex.Store({
         status: '',
         token: localStorage.getItem('token') || '',
         user: {},
-        profile: {}
+        profile: {},
+        tmp_access_token: ''
 
     },
 
@@ -18,7 +19,9 @@ export default new Vuex.Store({
         isLoggedIn: state => !!state.token,
         authStatus: state => state.status,
 
-        profile: state => state.profile
+        profile: state => state.profile,
+
+        tmp_access_token: state => state.tmp_access_token
     },
 
     mutations: {
@@ -49,7 +52,25 @@ export default new Vuex.Store({
 
         set_auth_token () {
             AXIOS.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.token
+        },
+
+        get_cookie (state) {
+            let cookie = document.cookie
+            let cookie_split = cookie.split('; ')
+            let tmp_access_token;
+
+            cookie_split.filter(item => {
+                if(item.indexOf('tmp_access_token') +1 ) {
+                    tmp_access_token =   item.split('=')[1]
+                }
+            })
+
+            state.tmp_access_token = tmp_access_token
+            tmp_access_token ? localStorage.setItem('token', tmp_access_token) : ''
         }
+
+
+
 
     },
 
@@ -64,10 +85,10 @@ export default new Vuex.Store({
                         const user = resp.data.user
 
                         // localStorage.setItem('token', resp.data.accessToken)
-
                         commit('auth_success', token, user)
                         commit('set_token', token)
                         commit('set_auth_token')
+                        commit('get_cookie')
 
                         resolve(resp)
                     })
@@ -146,7 +167,11 @@ export default new Vuex.Store({
                     })
             })
 
-        }
+        },
+
+
+
+
     },
 
     modules: {}

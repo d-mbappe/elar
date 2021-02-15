@@ -3,28 +3,27 @@
         <!--Убирает автвозаполнение полей-->
         <div style="width: 0; height: 0; overflow: hidden"><input type="text"><input type="password"></div>
 
-        <InputCustom v-model="user.email" name="Ваш email" isRequired="true" helper=""
+        <InputCustom v-model.trim="user.email" name="Ваш email" isRequired="true" helper=""
                      :isInvalid="!$v.user.email.required || !$v.user.email.email"
         />
-        <InputCustom v-model="user.phone" name="Ваш телефон" data=""
+        <InputCustom v-model.trim="user.phone" name="Ваш телефон" data=""
                      :isInvalid="!$v.user.phone.numeric"
         />
-        <InputCustom v-model="user.password" name="Ваш пароль" data="" isRequired="true" isType="password" helper="Минимум 6 символов"
+        <InputCustom v-model.trim="user.password" name="Ваш пароль" data="" isRequired="true" isType="password" helper="Минимум 6 символов"
                      :isInvalid="!$v.user.password.required || !$v.user.password.minLength"
         />
-        <InputCustom v-model="user.passwordRepeat" name="Подтвердите пароль" data="" isRequired="true" isType="password"
+        <InputCustom v-model.trim="user.passwordRepeat" name="Подтвердите пароль" data="" isRequired="true" isType="password"
                      :isInvalid="!$v.user.passwordRepeat.required || !$v.user.passwordRepeat.sameAs"
         />
-        <InputCustom v-model="user.birthdate" name="Дата рождения" data="дд.мм.гг" isRequired="" isType="date"
-
+        <InputCustom v-model.trim="user.birthdate" name="Дата рождения" data="дд.мм.гг" isRequired="" isType="date"
         />
-        <InputCustom v-model="user.name" name="Ваше имя" data="" isRequired="true"
+        <InputCustom v-model.trim="user.name" name="Ваше имя" data="" isRequired="true"
                      :isInvalid="!$v.user.name.required || !$v.user.name.alpha"
         />
-        <InputCustom v-model="user.surname" name="Ваша фамилия" data="" isRequired="true"
+        <InputCustom v-model.trim="user.surname" name="Ваша фамилия" data="" isRequired="true"
                      :isInvalid="!$v.user.surname.required || !$v.user.surname.alpha"
         />
-        <InputCustom v-model="user.patronymic" name="Ваше отчество" data="" isRequired=""
+        <InputCustom v-model.trim="user.patronymic" name="Ваше отчество" data="" isRequired=""
                      :isInvalid="!$v.user.patronymic.alpha"
         />
 
@@ -150,15 +149,6 @@
 
     &:active, &:focus {
         box-shadow: 0 0 10px rgba(0,0,0,0.8) inset;
-    }
-
-    &:disabled {
-        opacity: 0.8;
-        cursor: not-allowed;
-        &:hover {
-            box-shadow: none;
-        }
-
     }
 }
 </style>

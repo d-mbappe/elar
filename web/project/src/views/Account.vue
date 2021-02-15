@@ -48,7 +48,6 @@
         },
 
         mounted() {
-            this.$store.dispatch('getUser')
         },
 
         computed: {
