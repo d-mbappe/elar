@@ -2,19 +2,34 @@
     <div class="login">
 
         <form @submit.prevent="login">
-            <InputCustom v-model="email" name="Ваш логин" isRequired="true" helper=""/>
-            <InputCustom v-model="password" name="Ваш пароль" isRequired="true" isType="password" :autocomplete="'on'" helper="Минимум 6 символов"/>
+            <!--Убирает автвозаполнение полей-->
+            <div style="width: 0; height: 0; overflow: hidden"><input type="text"><input type="password"></div>
+            <InputCustom v-model.lazy="email"
+                         name="Ваш логин"
+                         isRequired="true"
+                         helper=""
+                         :isInvalid=" (!$v.email.required || !$v.email.email) && $v.email.$dirty"
+            />
+
+            <InputCustom v-model="password"
+                         name="Ваш пароль"
+                         isRequired="true"
+                         isType="password"
+                         :autocomplete="'off'"
+                         helper="Минимум 6 символов"
+                         :isInvalid="!$v.password.required || !$v.password.minLength"
+            />
 
 
             <div class="login__social">
                 <p class="login__social__title">Войти через соцсети:</p>
 
                 <a :href="socialURL[0].url"><img class="login__social__icon" src="../assets/icons/vk-logo.svg" alt=""></a>
-                <a :href="socialURL[1].url"><img class="login__social__icon" src="../assets/icons/ok-logo.svg" alt=""></a>
                 <a :href="socialURL[2].url"><img class="login__social__icon" src="../assets/icons/facebook-logo.svg" alt=""></a>
+                <a :href="socialURL[1].url"><img class="login__social__icon" src="../assets/icons/ok-logo.svg" alt=""></a>
             </div>
 
-            <button type="submit" class="login-btn">
+            <button :disabled=" $v.$invalid" type="submit" class="login-btn">
                 Войти
             </button>
         </form>
@@ -26,6 +41,8 @@
 <script>
     import InputCustom from "./simple/InputCustom";
     import {AXIOS} from "../store/axios";
+    import {email, required, minLength } from 'vuelidate/lib/validators'
+
 
     export default {
         name: "Login",
@@ -42,7 +59,20 @@
                     name: 'ok',
                     url: null
                 }, {name: 'facebook',
-                    url: null }]
+                    url: null }
+                ],
+
+            }
+        },
+
+        validations: {
+            email: {
+                required,
+                email
+            },
+            password: {
+                required,
+                minLength: minLength(6)
             }
         },
 
@@ -57,8 +87,7 @@
                             social.url = resp.data
                         })
                         .catch(err => {
-                            console.log(555)
-                            // reject(err)
+                            reject(err)
                         })
             },
 
@@ -66,12 +95,19 @@
                 let email = this.email;
                 let password = this.password;
 
+
+
                 this.$store.dispatch('login', { email, password })
                     .then( res => {
                         console.log(res)
+
                         if(res.status === 200) {
                             this.$store.dispatch('getUser');
-                            this.$router.push('/main')
+                            console.log(localStorage.token)
+                            this.$router.push('/account')
+                        }
+                        else {
+                            console.log(3)
                         }
                     })
                     .catch(err => console.log(err))
@@ -88,56 +124,66 @@
 <style lang="scss" scoped>
     @import "../assets/variables";
 
+img {
+    width: 20px;
+}
 
-    img {
-        width: 20px;
-    }
-    .login {
-        color: $white;
-    }
+.login {
+    color: $white;
+}
 
-    .login__social {
-        margin-top: 25px;
-        display: flex;
-        align-items: center;
+.login__social {
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
 
-        &__icon {
-            margin-left: 7px;
-
-            &:hover {
-                opacity: 0.8;
-            }
-        }
-    }
-
-    .login-btn {
-        border:none;
-        -webkit-box-shadow: none;
-        -moz-box-shadow: none;
-        box-shadow: none;
-        /**/
-        cursor: pointer;
-        margin-top: 15px;
-
-        width: 100%;
-        background: $white;
-
-        min-height: 50px;
-
-        font-family: 'Roboto Slab', sans-serif;
-        font-size: 15px;
-        font-weight: 700;
-        color: $black;
-        text-align: center;
-
-        border-radius: 5px;
+&__icon {
+    margin-left: 7px;
 
     &:hover {
-         box-shadow: 0 0 10px rgba(0,0,0,0.4) inset;
-     }
+        cursor: pointer;
+        opacity: 0.8;
+    }
+}
+}
+
+.login-btn {
+    border:none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    /**/
+    cursor: pointer;
+    margin-top: 15px;
+
+    width: 100%;
+    background: $white;
+
+    min-height: 50px;
+
+    font-family: 'Roboto Slab', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: $black;
+    text-align: center;
+
+    border-radius: 5px;
+
+    &:hover {
+     box-shadow: 0 0 10px rgba(0,0,0,0.4) inset;
+    }
 
     &:active, &:focus {
-        box-shadow: 0 0 10px rgba(0,0,0,0.8) inset;
-        }
+    box-shadow: 0 0 10px rgba(0,0,0,0.8) inset;
     }
+
+    &:disabled {
+        opacity: 0.8;
+        cursor: not-allowed;
+        &:hover {
+            box-shadow: none;
+        }
+
+    }
+}
 </style>

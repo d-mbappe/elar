@@ -36,7 +36,21 @@ export default new Vuex.Store({
         logout(state) {
             state.status = ''
             state.token = ''
+            state.profile = {}
         },
+
+        set_profile(state, payload) {
+            state.profile = payload
+        },
+
+        set_token(payload) {
+            localStorage.setItem('token', payload.token)
+        },
+
+        set_auth_token () {
+            AXIOS.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.token
+        }
+
     },
 
     actions: {
@@ -49,15 +63,18 @@ export default new Vuex.Store({
                         const token = resp.data.accessToken
                         const user = resp.data.user
 
-                        localStorage.setItem('token', resp.data.accessToken)
-                        commit('auth_success', token, user)
-                        AXIOS.defaults.headers.common['Authorization'] = 'Bearer ' + state.token
-                        resolve(resp)
+                        // localStorage.setItem('token', resp.data.accessToken)
 
+                        commit('auth_success', token, user)
+                        commit('set_token', token)
+                        commit('set_auth_token')
+
+                        resolve(resp)
                     })
                     .catch(err => {
                         commit('auth_error')
                         localStorage.removeItem('token')
+                        Vue.prototype.$flashStorage.flash('Неверный логин или пароль', 'error')
                         reject(err)
                     })
             })
@@ -82,29 +99,46 @@ export default new Vuex.Store({
                         const token = resp.data.accessToken
                         const user = resp.data.user
 
-                        localStorage.setItem('token', resp.data.accessToken)
-                        // AXIOS.defaults.headers.common['Authorization'] = token
+                        // localStorage.setItem('token', resp.data.accessToken)
                         commit('auth_success', token, user)
-                        AXIOS.defaults.headers.common['Authorization'] = 'Bearer ' + state.token
+                        commit('set_token', token)
+                        commit('set_auth_token')
 
                         resolve(resp)
                     })
                     .catch(err => {
                         commit('auth_error', err)
                         localStorage.removeItem('token')
+                        Vue.prototype.$flashStorage.flash('Пользователь с таким email уже существует', 'error')
+
                         reject(err)
                     })
             })
         },
 
-        getUser({commit, state}, ) {
-
+        getUser({commit, state} ) {
             return new Promise((resolve, reject) => {
+                commit('set_auth_token')
 
                 AXIOS.get('/api/profile')
                     .then(resp => {
-                        resp.data ? state.profile = resp.data : state.profile = {}
+                        commit('set_profile', resp.data)
+                    })
+                    .catch(err => {
+                        commit('auth_error', err)
+                        reject(err)
+                    })
+            })
 
+        },
+
+        saveProfile({commit, state}, profile) {
+            return new Promise((resolve, reject) => {
+                commit('set_auth_token')
+
+                AXIOS.patch('/api/profile', profile)
+                    .then(resp => {
+                        commit('set_profile', resp.data)
                     })
                     .catch(err => {
                         commit('auth_error', err)

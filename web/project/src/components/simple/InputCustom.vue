@@ -1,12 +1,15 @@
 <template>
-    <div class="page">
+    <div class="field-wrap">
         <label class="field">
             <input :type="pass"
                    :value="value"
                    :autocomplete="autocomplete"
                    @input="updateData($event.target.value)"
                    class="field__input"
-                   :placeholder="1">
+                   :class="{error : isInvalid}"
+                   :placeholder="1"
+
+            >
             <span class="field__label-wrap">
                 <span class="field__label " :class="{required : required}">{{content}}</span>
             </span>
@@ -19,13 +22,11 @@
 </template>
 
 <script>
-
     export default {
         name: "InputCustom",
 
         props: {
             value: {
-                type: String,
                 required: true
             },
             name: {
@@ -43,8 +44,10 @@
             },
             autocomplete: {
                 type: String,
-                default: 'off',
-            }
+                default: 'nope',
+            },
+
+            isInvalid: {}
         },
 
         data() {
@@ -56,12 +59,16 @@
 
                 pass: this.isType,
             }
+
         },
 
         methods: {
             updateData(value) {
                 this.$emit('input', value)
             }
+        },
+
+        mounted() {
         }
     }
 </script>
@@ -73,6 +80,10 @@
     RESET STYLES
     =====
     */
+    .error {
+        border: 2px solid red !important;
+        border-radius: 5px !important;
+    }
 
 
 
@@ -263,7 +274,7 @@
         flex-direction: column;
     }
 
-    .page{
+    .field-wrap{
         /*box-sizing: border-box;*/
         width: 100%;
         max-width: 480px;
