@@ -88,7 +88,6 @@ export default new Vuex.Store({
                         commit('auth_success', token, user)
                         commit('set_token', token)
                         commit('set_auth_token')
-                        commit('get_cookie')
 
                         resolve(resp)
                     })
