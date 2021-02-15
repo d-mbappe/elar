@@ -94,7 +94,7 @@ class AuthController extends Controller
      */
     public function actionConfirm(): User
     {
-        $token = $this->tokenService->findByCode(Yii::$app->request->get('code'));
+        $token = $this->tokenService->findByCode(Yii::$app->request->get('token'));
         if (!$token) {
             throw new UserException('Неверный токен');
         }

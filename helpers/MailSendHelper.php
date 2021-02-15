@@ -16,7 +16,7 @@ class MailSendHelper
     public static function sendEmailConfirmationMessage(string $email , string $code): bool
     {
         return Yii::$app->mailer->compose()
-            ->setFrom('noreply@elar.com')
+            ->setFrom('aizosimov@elar.ru')
             ->setTo($email)
             ->setSubject('Активация аккаунта')
             ->setTextBody("Вы зарегистрировали аккаунт на сайте ".
