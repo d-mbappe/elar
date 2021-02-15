@@ -59,7 +59,13 @@ class VkController extends Controller
                     $user->uuid = $userInfo['id'];
                     $user->register();
                 }
-                return $user;
+                $cookies = Yii::$app->response->cookies;
+
+                $cookies->add(new \yii\web\Cookie([
+                    'name' => 'tmp_access_token',
+                    'value' => $user->authKey,
+                ]));
+                return $this->redirect('/');
             }
             return false;
         }
