@@ -26,10 +26,6 @@
     components: {Header},
 
     mounted() {
-      if (!localStorage.token) {
-          console.log('kek')
-        this.$store.commit('get_cookie')
-      }
     }
 
   }

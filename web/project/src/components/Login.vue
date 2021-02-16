@@ -102,14 +102,19 @@
 
                         if(res.status === 200) {
                             this.$store.dispatch('getUser');
-                            console.log(localStorage.token)
                             this.$router.push('/account')
-                        }
-                        else {
-                            console.log(3)
                         }
                     })
                     .catch(err => console.log(err))
+            }
+        },
+        async mounted() {
+            /*Логика для авторизации через соцсети*/
+            await this.$store.commit('get_user')
+            await this.$store.commit('set_auth_token')
+
+            if(localStorage.token && this.$store.state.tmp_access_token) {
+                window.location.href = 'account';
             }
         },
 
