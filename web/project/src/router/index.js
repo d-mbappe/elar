@@ -71,7 +71,7 @@ router.beforeEach((to, from, next) => {
   if(to.path !== '/auth') {
     store.dispatch("getUser")
   }
-
+/**/
   if (!localStorage.token && to.path !== '/auth') {
     store.commit('get_cookie')
     store.commit('set_auth_token')
