@@ -64,6 +64,7 @@ class VkController extends Controller
                 $cookies->add(new \yii\web\Cookie([
                     'name' => 'tmp_access_token',
                     'value' => $user->authKey,
+                    'httpOnly' => false
                 ]));
                 return $this->redirect('/');
             }
