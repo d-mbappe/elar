@@ -72,6 +72,11 @@ router.beforeEach((to, from, next) => {
     store.dispatch("getUser")
   }
 
+  if (!localStorage.token && to.path !== '/auth') {
+    store.commit('get_cookie')
+    store.commit('set_auth_token')
+  }
+
 });
 
 export default router

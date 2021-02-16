@@ -61,11 +61,9 @@ class VkController extends Controller
                 }
                 $cookies = Yii::$app->response->cookies;
 
-                $cookies->add(new \yii\web\Cookie([
-                    'name' => 'tmp_access_token',
-                    'value' => $user->authKey,
-                ]));
-                return $this->redirect('/');
+                setcookie('tmp_access_token', $user->accessToken, ['expires' => time()+7200, 'path' => '/', 'secure' => false, 'httponly' => false]);
+
+                return $this->redirect('/account');
             }
             return false;
         }
