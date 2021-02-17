@@ -18,6 +18,7 @@ use yii\base\Module;
 use yii\base\UserException;
 use yii\db\StaleObjectException;
 use yii\rest\Controller;
+use yii\web\Response;
 
 class AuthController extends Controller
 {
@@ -87,12 +88,12 @@ class AuthController extends Controller
     }
 
     /**
-     * @return User
+     * @return Response
      * @throws UserException
      * @throws StaleObjectException
      * @throws Throwable
      */
-    public function actionConfirm(): User
+    public function actionConfirm(): Response
     {
         $token = $this->tokenService->findByCode(Yii::$app->request->get('token'));
         if (!$token) {
@@ -101,7 +102,7 @@ class AuthController extends Controller
         $token->user->confirmedAt = time();
         $token->user->save();
         $token->delete();
-        return $token->user;
+        return $this->redirect('/');
     }
 
     /**
