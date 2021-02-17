@@ -15,7 +15,7 @@
                              :isInvalid="!$v.profile.surname.required || !$v.profile.surname.cyrillic && !$v.profile.surname.alpha"
                 />
                 <InputCustom v-model.trim="profile.patronymic" name="Ваше отчество" data="" isRequired=""
-                             :isInvalid="$v.profile.patronymic.cyrillic && !$v.profile.patronymic.alpha"
+                             :isInvalid="!$v.profile.patronymic.cyrillic && !$v.profile.patronymic.alpha"
                 />
                 <InputCustom v-model.trim="profile.birthdate" name="Дата рождения" data="дд.мм.гг" isRequired="" isType="date"
                 />

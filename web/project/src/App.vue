@@ -81,8 +81,6 @@ body {
   padding: 0;
   margin: 0;
   background: rgb(63,28,20);
-  background: -moz-linear-gradient(218.14deg, #3F1C14 0.57%, $base-color 43.26%, $base-color 58.57%, #3F1C14 102.23%);
-  background: -webkit-linear-gradient(218.14deg, #3F1C14 0.57%, #C3523B 43.26%, #C3523B 58.57%, #3F1C14 102.23%);
   background: linear-gradient(218.14deg, #3F1C14 0.57%, $base-color 43.26%, $base-color 58.57%, #3F1C14 102.23%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f1c14",endColorstr="#3f1c14",GradientType=1);
 
@@ -157,8 +155,8 @@ button {
 
 #app {
   font-family: "Roboto", "Roboto Slab", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  smoothing: antialiased;
+  font-smoothing: grayscale;
 }
 
 #nav {

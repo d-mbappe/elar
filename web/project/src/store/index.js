@@ -11,7 +11,8 @@ export default new Vuex.Store({
         token: localStorage.getItem('token') || '',
         user: {},
         profile: {},
-        tmp_access_token: ''
+        tmp_access_token: '',
+        auth_social: false
 
     },
 
@@ -92,7 +93,7 @@ export default new Vuex.Store({
                     .catch(err => {
                         commit('auth_error')
                         localStorage.removeItem('token')
-                        Vue.prototype.$flashStorage.flash('Неверный логин или пароль', 'error')
+                        Vue.prototype.$flashStorage.flash('Неверный логин или пароль', 'error', { timeout: 2000})
                         reject(err)
                     })
             })
@@ -127,7 +128,7 @@ export default new Vuex.Store({
                     .catch(err => {
                         commit('auth_error', err)
                         localStorage.removeItem('token')
-                        Vue.prototype.$flashStorage.flash('Пользователь с таким email уже существует', 'error')
+                        Vue.prototype.$flashStorage.flash('Пользователь с таким email уже существует', 'error', { timeout: 2000})
 
                         reject(err)
                     })
@@ -157,11 +158,11 @@ export default new Vuex.Store({
                 AXIOS.patch('/api/profile', profile)
                     .then(resp => {
                         commit('set_profile', resp.data)
-                        Vue.prototype.$flashStorage.flash('Изменения успешно сохранены', 'success')
+                        Vue.prototype.$flashStorage.flash('Изменения успешно сохранены', 'success', { timeout: 2000})
                     })
                     .catch(err => {
                         commit('auth_error', err)
-                        Vue.prototype.$flashStorage.flash('При сохранении возникла ошибка', 'error')
+                        Vue.prototype.$flashStorage.flash('При сохранении возникла ошибка', 'error', { timeout: 2000})
                         reject(err)
                     })
             })
@@ -174,11 +175,11 @@ export default new Vuex.Store({
                 AXIOS.patch('/api/auth/reset-password', oldPasswod, newPassword, newPasswordRepeat)
                     .then(resp => {
                         // commit('set_profile', resp.data)
-                        Vue.prototype.$flashStorage.flash('Изменения успешно сохранены', 'success')
+                        Vue.prototype.$flashStorage.flash('Изменения успешно сохранены', 'success', { timeout: 2000})
                     })
                     .catch(err => {
                         commit('auth_error', err)
-                        Vue.prototype.$flashStorage.flash('При сохранении возникла ошибка', 'error')
+                        Vue.prototype.$flashStorage.flash('При сохранении возникла ошибка', 'error', { timeout: 2000})
                         reject(err)
                     })
             })

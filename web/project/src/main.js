@@ -18,7 +18,7 @@ const token = localStorage.getItem('token')
 Vue.use(Vuelidate);
 Vue.use(VueFlashMessage, {
     messageOptions: {
-        timeout: 2000,
+        timeout: 1000,
     }
 });
 

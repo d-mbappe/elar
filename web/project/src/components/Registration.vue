@@ -31,7 +31,7 @@
             Нажимая на кнопку «зарегистрироваться», вы даёте согласие на <a href="#" class="registration__policy-link">обработку персональных данных</a>
         </div>
 
-        <button :disabled="$v.$invalid" type="submit" class="registration-btn">
+        <button type="submit" class="registration-btn">
             Зарегистрироваться
         </button>
 

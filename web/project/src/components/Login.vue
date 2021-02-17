@@ -115,11 +115,12 @@
 
             if(localStorage.token && this.$store.state.tmp_access_token) {
                 window.location.href = 'account';
+                this.$store.state.auth_social = true;
             }
         },
 
         created() {
-             this.socialURL.forEach( item => this.getUrl(item))
+            this.socialURL.forEach( item => this.getUrl(item))
         }
 
     }
