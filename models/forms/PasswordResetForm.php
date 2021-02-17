@@ -25,8 +25,8 @@ class PasswordResetForm extends Model
     public function rules(): array
     {
         return [
-            [['orlPassword', 'newPassword', 'newPasswordRepeat'], 'required'],
-            [['orlPassword', 'newPassword', 'newPasswordRepeat'], 'string', 'max' => 256],
+            [['oldPassword', 'newPassword', 'newPasswordRepeat'], 'required'],
+            [['oldPassword', 'newPassword', 'newPasswordRepeat'], 'string', 'max' => 256],
             ['newPassword', 'compare', 'compareAttribute' => 'newPasswordRepeat', 'message' => 'Пароли должны совпадать'],
         ];
     }

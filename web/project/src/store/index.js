@@ -157,13 +157,31 @@ export default new Vuex.Store({
                 AXIOS.patch('/api/profile', profile)
                     .then(resp => {
                         commit('set_profile', resp.data)
+                        Vue.prototype.$flashStorage.flash('Изменения успешно сохранены', 'success')
                     })
                     .catch(err => {
                         commit('auth_error', err)
+                        Vue.prototype.$flashStorage.flash('При сохранении возникла ошибка', 'error')
                         reject(err)
                     })
             })
+        },
 
+        resetPassword({commit, state}, oldPasswod, newPassword, newPasswordRepeat) {
+            return new Promise((resolve, reject) => {
+                commit('set_auth_token')
+
+                AXIOS.patch('/api/auth/reset-password', oldPasswod, newPassword, newPasswordRepeat)
+                    .then(resp => {
+                        // commit('set_profile', resp.data)
+                        Vue.prototype.$flashStorage.flash('Изменения успешно сохранены', 'success')
+                    })
+                    .catch(err => {
+                        commit('auth_error', err)
+                        Vue.prototype.$flashStorage.flash('При сохранении возникла ошибка', 'error')
+                        reject(err)
+                    })
+            })
         },
 
 

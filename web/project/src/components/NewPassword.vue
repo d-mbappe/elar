@@ -5,14 +5,21 @@
 
         <div class="password__modify__form">
             <form id="profileForm" class="password__modify__form__data">
-                <InputCustom v-model="profile.password"
+                <InputCustom v-model.trim="oldPassword"
+                             name="Старый пароль"
+                             data=""
+                             isType="password"
+                             isRequired=""
+                             :isInvalid=" (!$v.oldPassword.required || !$v.oldPassword.minLength)"
+                />
+                <InputCustom v-model.trim="profile.password"
                              name="Новый пароль"
                              data=""
                              isType="password"
                              isRequired=""
                              :isInvalid=" (!$v.profile.password.required || !$v.profile.password.minLength)"
                 />
-                <InputCustom v-model="profile.passwordRepeat"
+                <InputCustom v-model.trim="profile.passwordRepeat"
                              name="Повтор пароля"
                              isType="password"
                              data=""
@@ -22,7 +29,7 @@
             </form>
         </div>
 
-        <button :disabled=" $v.$invalid" class="password__modify__footer-info__save-btn" @click="saveProfile">
+        <button :disabled=" $v.$invalid" class="password__modify__footer-info__save-btn" @click="resetPassword">
             Сохранить
         </button>
 
@@ -39,11 +46,15 @@
 
         data() {
             return {
-                // profile: {}
+                oldPassword: ''
             }
         },
 
         validations: {
+            oldPassword: {
+                required,
+                minLength: minLength(6)
+            },
             profile: {
                 password: {
                     required,
@@ -72,8 +83,13 @@
         },
 
         methods: {
-            saveProfile() {
-                this.$store.dispatch('saveProfile', this.profile).then()
+            resetPassword() {
+
+
+                this.$store.dispatch('resetPassword', {oldPassword: this.oldPassword, newPassword: this.profile.password, newPasswordRepeat: this.profile.passwordRepeat } ).then()
+                this.oldPassword = ''
+                this.profile.password = ''
+                this.profile.passwordRepeat = ''
             },
         }
     }
@@ -124,12 +140,16 @@
                 .field-wrap {
                     width: calc(50% - 10px);
                     max-height: 50px;
-                    margin: 0 5px;
+                    margin: 5px 5px;
 
                     &.location {
                         width: 100%;
                         max-width: unset;
                     }
+                }
+
+                .field-wrap:first-of-type {
+                    margin-right: 50px;
                 }
             }
         }
