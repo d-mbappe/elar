@@ -49,6 +49,11 @@ class SignUpForm extends User
      */
     public $birthdate;
 
+    /**
+     * @var string
+     */
+    public $photo;
+
     const SCENARIO_FROM_SITE = 'from_site';
     const SCENARIO_FROM_VK = 'from_vk';
     const SCENARIO_FROM_OK = 'from_ok';
@@ -63,7 +68,7 @@ class SignUpForm extends User
             [['email'], 'unique'],
             [['name', 'surname'], 'required'],
             [['email', 'password', 'passwordRepeat'], 'required', 'on' => self::SCENARIO_FROM_SITE],
-            [['password', 'passwordRepeat', 'name', 'surname', 'patronymic', 'phone'], 'string', 'max' => 255],
+            [['password', 'passwordRepeat', 'name', 'surname', 'patronymic', 'phone', 'photo'], 'string', 'max' => 255],
             [['password'], 'string', 'min'=> 6, 'max' => 255],
             [['birthdate'], 'date', 'format' => 'php:Y-m-d', 'on' => self::SCENARIO_FROM_SITE],
             [['birthdate'], 'date', 'format' => 'php:Y-m-d', 'on' => self::SCENARIO_FROM_OK],
@@ -101,6 +106,7 @@ class SignUpForm extends User
                 'surname' => $this->surname,
                 'patronymic' => $this->patronymic,
                 'phone' => $this->phone,
+                'photo' => $this->photo,
                 'birthdate' => date('Y-m-d', strtotime($this->birthdate))
             ], '');
 

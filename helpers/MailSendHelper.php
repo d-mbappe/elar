@@ -22,7 +22,7 @@ class MailSendHelper
             ->setTextBody("Вы зарегистрировали аккаунт на сайте ".
                 Yii::$app->request->getHostInfo().
                 ". Для активации аккаунта перейдите по ссылке ".
-                Yii::$app->request->getHostInfo()."/auth/confirm?token=$code ."
+                Yii::$app->request->getHostInfo()."/api/auth/confirm?token=$code ."
             )
             ->send();
     }
