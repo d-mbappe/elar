@@ -76,6 +76,7 @@ class OkController extends Controller
                     $user->birthdate = $userInfo['birthday'];
                     $user->from = User::FROM_OK;
                     $user->uuid = $userInfo['uid'];
+                    $user->photo = $userInfo['pic_1'];
                     $user->register();
                 }
                 setcookie('tmp_access_token', $user->accessToken, ['expires' => time()+7200, 'path' => '/', 'secure' => false, 'httponly' => false]);

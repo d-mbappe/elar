@@ -57,6 +57,7 @@ class VkController extends Controller
                     $user->birthdate = $userInfo['bdate'];
                     $user->from = User::FROM_VK;
                     $user->uuid = $userInfo['id'];
+                    $user->photo = $userInfo['photo_big'];
                     $user->register();
                 }
 
