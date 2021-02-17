@@ -4,18 +4,18 @@
 
         <div class="account__modify__form">
             <div class="account__modify__form__avatar">
-                <Avatar @setImg="setProfileImg($event)" :imageURL="'https://www.worldphoto.org/sites/default/files/default-media/Piercy.jpg'"/>
+                <Avatar @setImg="setProfileImg($event)" :imageURL="profile.photo"/>
             </div>
 
             <form id="profileForm" class="account__modify__form__data">
                 <InputCustom v-model.trim="profile.name" name="Ваше имя" data="" isRequired="true"
-                             :isInvalid="!$v.profile.name.required || !$v.profile.name.alpha"
+                             :isInvalid="!$v.profile.name.required || !$v.profile.name.cyrillic && !$v.profile.name.alpha"
                 />
                 <InputCustom v-model.trim="profile.surname" name="Ваша фамилия" data="" isRequired="true"
-                             :isInvalid="!$v.profile.surname.required || !$v.profile.surname.alpha"
+                             :isInvalid="!$v.profile.surname.required || !$v.profile.surname.cyrillic && !$v.profile.surname.alpha"
                 />
                 <InputCustom v-model.trim="profile.patronymic" name="Ваше отчество" data="" isRequired=""
-                             :isInvalid="!$v.profile.patronymic.alpha"
+                             :isInvalid="$v.profile.patronymic.cyrillic && !$v.profile.patronymic.alpha"
                 />
                 <InputCustom v-model.trim="profile.birthdate" name="Дата рождения" data="дд.мм.гг" isRequired="" isType="date"
                 />
@@ -47,6 +47,9 @@
     import InputCustom from "./simple/InputCustom";
     import Avatar from "../components/Avatar";
     import {alpha, email, minLength, numeric, required, sameAs} from "vuelidate/lib/validators";
+
+    import { helpers } from 'vuelidate/lib/validators'
+    const cyrillic = helpers.regex('cir', /^[а-яА-ЯёЁ]+$/i)
 
     export default {
         name: "Profile",
@@ -80,23 +83,24 @@
                 },
                 name: {
                     required,
+                    cyrillic,
                     alpha
                 },
                 surname: {
                     required,
+                    cyrillic,
                     alpha
                 },
                 patronymic: {
+                    cyrillic,
                     alpha
                 },
             }
 
         },
 
-        mounted() {
-            this.$store.dispatch('getUser')
-            this.profile.photo = 'https://www.worldphoto.org/sites/default/files/default-media/Piercy.jpg'
-
+       async mounted() {
+           await this.$store.dispatch('getUser')
             // this.profile = this.$store.state.profile
         },
 

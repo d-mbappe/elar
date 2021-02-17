@@ -46,12 +46,14 @@
 
         data() {
             return {
-                image: this.imageURL
-
+                imageL: this.imageURL
             }
         },
 
-        mounted() {
+        computed: {
+            image() {
+                return this.imageL ? this.imageL : process.env.VUE_APP_URL + this.imageURL
+            }
         },
 
         methods: {
@@ -74,7 +76,7 @@
                 var vm = this;
 
                 reader.onload = function(e) {
-                    vm.image = e.target.result;
+                    vm.imageL = e.target.result;
                     console.log(e.target.result)
                     vm.$emit('setImg', vm.image)
                 };
@@ -83,7 +85,7 @@
             },
 
             removeFile() {
-                this.image = '';
+                this.imageL = '';
             }
         }
     }
