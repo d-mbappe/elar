@@ -78,7 +78,9 @@ class OkController extends Controller
                     $user->uuid = $userInfo['uid'];
                     $user->register();
                 }
-                return $user;
+                setcookie('tmp_access_token', $user->accessToken, ['expires' => time()+7200, 'path' => '/', 'secure' => false, 'httponly' => false]);
+
+                return $this->redirect('/account');
             }
             return false;
         }
