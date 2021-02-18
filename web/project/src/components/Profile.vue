@@ -9,17 +9,19 @@
 
             <form id="profileForm" class="account__modify__form__data">
                 <InputCustom v-model.trim="profile.name" name="Ваше имя" data="" isRequired="true"
-                             :isInvalid="!$v.profile.name.required || !$v.profile.name.cyrillic && !$v.profile.name.alpha"
+                             :isInvalid="!$v.profile.name.required || !$v.profile.name.text"
                 />
                 <InputCustom v-model.trim="profile.surname" name="Ваша фамилия" data="" isRequired="true"
-                             :isInvalid="!$v.profile.surname.required || !$v.profile.surname.cyrillic && !$v.profile.surname.alpha"
+                             :isInvalid="!$v.profile.surname.required || !$v.profile.surname.text"
                 />
                 <InputCustom v-model.trim="profile.patronymic" name="Ваше отчество" data="" isRequired=""
-                             :isInvalid="!$v.profile.patronymic.cyrillic && !$v.profile.patronymic.alpha"
+                             :isInvalid="!$v.profile.patronymic.text"
                 />
                 <InputCustom v-model.trim="profile.birthdate" name="Дата рождения" data="дд.мм.гг" isRequired="" isType="date"
                 />
-                <InputCustom class="field-wrap location" v-model.trim="profile.location" name="Место жительства" data="" isRequired="" />
+                <InputCustom class="field-wrap location" v-model.trim="profile.location" name="Место жительства" data="" isRequired=""
+                             :isInvalid="!$v.profile.location.text"
+                />
             </form>
         </div>
 
@@ -28,7 +30,7 @@
                 Заполняя данную форму вы соглашаетесь с <a href="#" class="registration__policy-link">политикой конфиденциальности</a> сайта
             </div>
 
-            <button class="account__modify__footer-info__save-btn" @click="saveProfile">
+            <button :disabled="$v.profile.$invalid" class="account__modify__footer-info__save-btn" @click="saveProfile">
                 Сохранить
             </button>
 
@@ -46,10 +48,10 @@
 <script>
     import InputCustom from "./simple/InputCustom";
     import Avatar from "../components/Avatar";
-    import {alpha, email, minLength, numeric, required, sameAs} from "vuelidate/lib/validators";
+    import {email, minLength, numeric, required, sameAs} from "vuelidate/lib/validators";
 
     import { helpers } from 'vuelidate/lib/validators'
-    const cyrillic = helpers.regex('cir', /^[а-яА-ЯёЁ]+$/i)
+    const text = helpers.regex('text', /^[а-яА-ЯёЁa-zA-Z]+$/i)
 
     export default {
         name: "Profile",
@@ -64,36 +66,19 @@
 
         validations: {
             profile: {
-                email: {
-                    required,
-                    email
-                },
-                phone: {
-                    numeric
-                },
-                password: {
-                    required,
-                    minLength: minLength(6)
-
-                },
-                passwordRepeat: {
-                    required,
-                    minLength: minLength(6),
-                    sameAs: sameAs('password')
-                },
                 name: {
                     required,
-                    cyrillic,
-                    alpha
+                    text,
                 },
                 surname: {
                     required,
-                    cyrillic,
-                    alpha
+                    text,
                 },
                 patronymic: {
-                    cyrillic,
-                    alpha
+                    text,
+                },
+                location: {
+                    text,
                 },
             }
 

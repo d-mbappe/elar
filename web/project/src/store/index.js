@@ -128,7 +128,7 @@ export default new Vuex.Store({
                     .catch(err => {
                         commit('auth_error', err)
                         localStorage.removeItem('token')
-                        Vue.prototype.$flashStorage.flash('Пользователь с таким email уже существует', 'error', { timeout: 2000})
+                        Vue.prototype.$flashStorage.flash(err.response.data.message, 'error', { timeout: 2000})
 
                         reject(err)
                     })
