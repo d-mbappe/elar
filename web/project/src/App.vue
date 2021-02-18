@@ -81,7 +81,7 @@ body {
   padding: 0;
   margin: 0;
   background: rgb(63,28,20);
-  background: linear-gradient(218.14deg, #3F1C14 0.57%, $base-color 43.26%, $base-color 58.57%, #3F1C14 102.23%);
+  background: linear-gradient(288.14deg, #3F1C14 0.57%, $base-color 43.26%, $base-color 58.57%, #3F1C14 102.23%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f1c14",endColorstr="#3f1c14",GradientType=1);
 
 }
