@@ -8,6 +8,7 @@ use app\models\User;
 use Yii;
 use yii\base\Exception;
 use yii\base\UserException;
+use yii\web\BadRequestHttpException;
 
 class SignUpForm extends User
 {
@@ -65,7 +66,7 @@ class SignUpForm extends User
     {
         return [
             [['email'], 'email'],
-            [['email'], 'unique'],
+            [['email'], 'unique', 'message' => 'Пользователь с таким email уже существует'],
             [['name', 'surname'], 'required'],
             [['email', 'password', 'passwordRepeat'], 'required', 'on' => self::SCENARIO_FROM_SITE],
             [['password', 'passwordRepeat', 'name', 'surname', 'patronymic', 'phone', 'photo'], 'string', 'max' => 255],
@@ -86,7 +87,7 @@ class SignUpForm extends User
     public function register(): bool
     {
         if (!$this->validate()) {
-            throw new UserException(urldecode(json_encode($this->errors)));
+            throw new BadRequestHttpException(array_shift(array_values($this->getErrors())[0]));
         } else {
             $this->generateAccessToken(86400);
             $this->generateAuthKey();
@@ -111,7 +112,7 @@ class SignUpForm extends User
             ], '');
 
             if (!$profileModel->save()) {
-                print_r($profileModel->errors); die;
+                throw new BadRequestHttpException(array_shift(array_values($profileModel->getErrors())[0]));
             }
 
             return true;
