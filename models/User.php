@@ -40,7 +40,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function fields(): array
     {
-        return ['email', 'status', 'accessToken'];
+        return ['email', 'status', 'accessToken', 'from'];
     }
 
     /**
