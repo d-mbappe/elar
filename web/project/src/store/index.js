@@ -55,6 +55,10 @@ export default new Vuex.Store({
             AXIOS.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.token
         },
 
+        set_social_auth (state) {
+            state.auth_social = true;
+        },
+
         get_cookie (state) {
             let cookie = document.cookie
             let cookie_split = cookie.split('; ')
@@ -172,14 +176,14 @@ export default new Vuex.Store({
             return new Promise((resolve, reject) => {
                 commit('set_auth_token')
 
-                AXIOS.patch('/api/auth/reset-password', oldPasswod, newPassword, newPasswordRepeat)
+                AXIOS.post('/api/auth/reset-password', oldPasswod, newPassword, newPasswordRepeat)
                     .then(resp => {
                         // commit('set_profile', resp.data)
                         Vue.prototype.$flashStorage.flash('Изменения успешно сохранены', 'success', { timeout: 2000})
                     })
                     .catch(err => {
                         commit('auth_error', err)
-                        Vue.prototype.$flashStorage.flash('При сохранении возникла ошибка', 'error', { timeout: 2000})
+                        Vue.prototype.$flashStorage.flash(err.response.data.message, 'error', { timeout: 2000})
                         reject(err)
                     })
             })
