@@ -114,7 +114,6 @@
             await this.$store.commit('set_auth_token')
 
             if(localStorage.token && this.$store.state.tmp_access_token) {
-                this.$store.commit('set_social_auth')
                 window.location.href = 'account';
             }
         },

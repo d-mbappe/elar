@@ -56,7 +56,7 @@ export default new Vuex.Store({
         },
 
         set_social_auth (state) {
-            state.auth_social = true;
+            state.auth_social = false;
         },
 
         get_cookie (state) {
@@ -91,6 +91,11 @@ export default new Vuex.Store({
                         commit('auth_success', token, user)
                         commit('set_token', token)
                         commit('set_auth_token')
+
+                        if(resp.data.from === 'from_site') {
+                            commit('set_social_auth')
+                        }
+
 
                         resolve(resp)
                     })
@@ -143,8 +148,9 @@ export default new Vuex.Store({
             return new Promise((resolve, reject) => {
                 commit('set_auth_token')
 
-                AXIOS.get('/api/profile')
+                AXIOS.get('/api/profile?expand=user')
                     .then(resp => {
+                        console.log('2314515125215',resp)
                         commit('set_profile', resp.data)
                     })
                     .catch(err => {

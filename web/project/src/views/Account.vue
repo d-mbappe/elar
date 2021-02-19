@@ -13,7 +13,7 @@
                             <li class="account__sidebar__list__item"><router-link  to="/example">Мои анкеты</router-link></li>
                             <li class="account__sidebar__list__item"><router-link  to="/example">Мои колонны</router-link></li>
                             <li class="account__sidebar__list__item"><router-link  to="/account/profile">Личные данные</router-link></li>
-                            <li v-if="!$store.state.auth_social" class="account__sidebar__list__item"><router-link  to="/account/new-password">Смена пароля</router-link></li>
+                            <li v-if="auth_social" class="account__sidebar__list__item"><router-link  to="/account/new-password">Смена пароля</router-link></li>
                         </ul>
                     </div>
 
@@ -47,12 +47,16 @@
             }
         },
 
-        mounted() {
+       async mounted() {
+            await this.$store.dispatch('getUser')
         },
 
         computed: {
             profile() {
                 return this.$store.state.profile
+            },
+            auth_social() {
+               return this.$store.state.auth_social;
             }
         },
         //
