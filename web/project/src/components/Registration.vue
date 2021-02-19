@@ -18,13 +18,13 @@
         <InputCustom v-model.trim="user.birthdate" name="Дата рождения" data="дд.мм.гг" isRequired="" isType="date"
         />
         <InputCustom v-model.trim="user.name" name="Ваше имя" data="" isRequired="true"
-                     :isInvalid="!$v.user.name.required || !$v.user.name.cyrillic && !$v.user.name.alpha"
+                     :isInvalid="!$v.user.name.required || !$v.user.name.text && !$v.user.name.alpha"
         />
         <InputCustom v-model.trim="user.surname" name="Ваша фамилия" data="" isRequired="true"
-                     :isInvalid="!$v.user.surname.required || !$v.user.surname.cyrillic && !$v.user.surname.alpha"
+                     :isInvalid="!$v.user.surname.required || !$v.user.surname.text && !$v.user.surname.alpha"
         />
         <InputCustom v-model.trim="user.patronymic" name="Ваше отчество" data="" isRequired=""
-                     :isInvalid="!$v.user.patronymic.cyrillic && !$v.user.patronymic.alpha"
+                     :isInvalid="!$v.user.patronymic.text && !$v.user.patronymic.alpha"
         />
 
         <div class="registration__policy">
@@ -43,7 +43,7 @@
     import {email, required, minLength, numeric, sameAs, alpha } from 'vuelidate/lib/validators'
 
     import { helpers } from 'vuelidate/lib/validators'
-    const cyrillic = helpers.regex('cir', /^[а-яА-ЯёЁ]+$/i)
+    const text = helpers.regex('text', /^[а-яА-ЯёЁa-zA-Z]+$/i)
 
 
 
@@ -87,17 +87,14 @@
                 },
                 name: {
                     required,
-                    cyrillic,
-                    alpha
+                    text,
                 },
                 surname: {
                     required,
-                    cyrillic,
-                    alpha
+                    text,
                 },
                 patronymic: {
-                    cyrillic,
-                    alpha
+                    text,
                 },
             }
 

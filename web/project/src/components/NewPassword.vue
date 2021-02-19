@@ -71,7 +71,6 @@
 
         mounted() {
             this.$store.dispatch('getUser')
-            // this.profile = this.$store.state.profile
         },
 
 
@@ -84,9 +83,8 @@
 
         methods: {
             resetPassword() {
-
-
                 this.$store.dispatch('resetPassword', {oldPassword: this.oldPassword, newPassword: this.profile.password, newPasswordRepeat: this.profile.passwordRepeat } ).then()
+
                 this.oldPassword = ''
                 this.profile.password = ''
                 this.profile.passwordRepeat = ''

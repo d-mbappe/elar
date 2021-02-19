@@ -1,10 +1,13 @@
 <template>
     <div class="project">
         <div class="project__logo">
-
+            <img  src="../assets/icons/bpolk_logo.svg" alt="">
         </div>
         <div class="project__name">
-            Наименование проекта
+            Бессмертный полк России
+        </div>
+        <div class="project__sub-name">
+            Шествие Бессмертного полка онлайн
         </div>
     </div>
 </template>
@@ -33,16 +36,25 @@
     &__logo {
         width: 59px;
         height: 59px;
+        position: relative;
 
-        border-radius: 50%;
-
-        background: $white;
+        img {
+            left: 86px;
+            position: absolute;
+            transform: scale(4.0)
+        }
      }
 
     &__name {
+        max-width: 160px;
         margin-left: 15px;
         align-content: center;
 
+    }
+
+    &__sub-name {
+        margin-left: 20px;
+        max-width: 255px;
     }
 }
 </style>
