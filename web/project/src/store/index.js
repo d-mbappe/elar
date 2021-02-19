@@ -55,6 +55,10 @@ export default new Vuex.Store({
             AXIOS.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.token
         },
 
+        set_social_auth (state) {
+            state.auth_social = true;
+        },
+
         get_cookie (state) {
             let cookie = document.cookie
             let cookie_split = cookie.split('; ')
