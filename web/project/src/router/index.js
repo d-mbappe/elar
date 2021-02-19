@@ -9,7 +9,7 @@ import Authentication from '../views/Authentication.vue'
 import Account from "../views/Account";
 import Profile from "../components/Profile";
 import NewPassword from "../components/NewPassword";
-import NewProfile from "../views/NewProfile";
+import NewQuestionnaire from "../views/NewQuestionnaire";
 
 
 Vue.use(VueRouter)
@@ -43,8 +43,8 @@ const routes = [
 
   {
     path: '/new-profile',
-    name: 'NewProfile',
-    component: NewProfile
+    name: 'NewQuestionnaire',
+    component: NewQuestionnaire
   },
 
   {

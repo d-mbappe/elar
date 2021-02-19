@@ -154,10 +154,7 @@ img {
 
 .login-btn {
     border:none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
     box-shadow: none;
-    /**/
     cursor: pointer;
     margin-top: 15px;
 
