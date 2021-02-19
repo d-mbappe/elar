@@ -20,7 +20,7 @@
                 <a href=""><img class="" src="../assets/icons/vk-logo.svg" alt=""></a>
                 <a href=""><img class="" src="../assets/icons/facebook-logo.svg" alt=""></a>
                 <a href=""><img class="" src="../assets/icons/ok-logo.svg" alt=""></a>
-                <a href=""><img class="" src="../assets/icons/instagram_logo.svg" alt=""></a>
+                <a href=""><img class="" src="../assets/icons/instagram-logo.svg" alt=""></a>
                 <a href=""><img class="" src="../assets/icons/youtube_logo.svg" alt=""></a>
             </div>
 
