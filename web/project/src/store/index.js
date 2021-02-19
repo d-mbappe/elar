@@ -56,7 +56,7 @@ export default new Vuex.Store({
         },
 
         set_social_auth (state) {
-            state.auth_social = false;
+            state.auth_social = true;
         },
 
         get_cookie (state) {
