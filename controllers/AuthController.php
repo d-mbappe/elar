@@ -15,9 +15,9 @@ use Yii;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 use yii\base\Module;
-use yii\base\UserException;
 use yii\db\StaleObjectException;
 use yii\rest\Controller;
+use yii\web\BadRequestHttpException;
 use yii\web\Response;
 
 class AuthController extends Controller
@@ -48,13 +48,14 @@ class AuthController extends Controller
         return [
             'sign-up' => ['POST'],
             'sign-in' => ['POST'],
+            'reset-password' => ['POST'],
             'confirm' => ['GET'],
         ];
     }
 
     /**
      * @return SignUpForm
-     * @throws UserException
+     * @throws BadRequestHttpException
      * @throws Exception
      * @throws InvalidConfigException
      */
@@ -69,27 +70,27 @@ class AuthController extends Controller
             MailSendHelper::sendEmailConfirmationMessage($model->email, $token->code);
             return $model;
         }
-        throw new UserException('Неизвестная ошибка');
+        throw new BadRequestHttpException('Неизвестная ошибка');
     }
 
     /**
      * @return User|null
      * @throws InvalidConfigException
-     * @throws UserException
+     * @throws BadRequestHttpException
      */
-    public function actionSignIn()
+    public function actionSignIn(): ?User
     {
         $model = new SignInForm();
         $model->load(Yii::$app->request->getBodyParams(), '');
         if ($model->validate()) {
             return $model->getUser();
         }
-        throw new UserException(json_encode($model->errors));
+        throw new BadRequestHttpException(array_shift(array_values($model->getErrors())[0]));
     }
 
     /**
      * @return Response
-     * @throws UserException
+     * @throws BadRequestHttpException
      * @throws StaleObjectException
      * @throws Throwable
      */
@@ -97,7 +98,7 @@ class AuthController extends Controller
     {
         $token = $this->tokenService->findByCode(Yii::$app->request->get('token'));
         if (!$token) {
-            throw new UserException('Неверный токен');
+            throw new BadRequestHttpException('Неверный токен');
         }
         $token->user->confirmedAt = time();
         $token->user->save();
@@ -116,10 +117,14 @@ class AuthController extends Controller
         if ($model->load(Yii::$app->request->getBodyParams(), '') && $model->validate()) {
             /** @var User $user */
             $user = Yii::$app->user->identity;
+
+            if (!$user->validatePassword($model->oldPassword)) {
+                throw new BadRequestHttpException('Неверный пароль');
+            }
             $user->setPassword($model->newPassword);
             $user->save();
             return $user;
         }
-        return false;
+        throw new BadRequestHttpException('Пароли должны совпадать');
     }
 }
