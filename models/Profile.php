@@ -38,6 +38,11 @@ class Profile extends ActiveRecord
         return ['name', 'surname', 'patronymic', 'phone', 'birthdate', 'location', 'photo'];
     }
 
+    public function extraFields()
+    {
+        return ['user'];
+    }
+
     /**
      * {@inheritdoc}
      */
