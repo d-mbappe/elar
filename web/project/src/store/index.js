@@ -96,7 +96,6 @@ export default new Vuex.Store({
                             commit('set_social_auth')
                         }
 
-
                         resolve(resp)
                     })
                     .catch(err => {
@@ -132,6 +131,8 @@ export default new Vuex.Store({
                         commit('auth_success', token, user)
                         commit('set_token', token)
                         commit('set_auth_token')
+
+                        commit('set_social_auth')
 
                         resolve(resp)
                     })
