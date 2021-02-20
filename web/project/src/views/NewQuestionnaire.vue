@@ -243,11 +243,8 @@
 
         &__document-list {
             width: 100%;
-            /*max-width: 855px;*/
             height: 320px;
             max-height: 100%;
-
-            /*padding-top: 10px;*/
 
             border: 1px solid #D1CFC6;
             border-radius: 5px;
