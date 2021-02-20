@@ -11,54 +11,54 @@
         </div>
 
         <div class="new-questionnaire__form">
-            <InputCustom  v-model.trim="questionnaire" name="Имя" data="" isRequired="true"
+            <InputCustom  v-model.trim="questionnaire.name" name="Имя" data="" isRequired="true"
 
             />
-            <InputCustom v-model.trim="questionnaire" name="Фамилия" data="" isRequired="true"
+            <InputCustom v-model.trim="questionnaire.surname" name="Фамилия" data="" isRequired="true"
 
             />
-            <InputCustom v-model.trim="questionnaire" name="Отчество" data="" isRequired=""
+            <InputCustom v-model.trim="questionnaire.patronymic" name="Отчество" data="" isRequired=""
 
             />
-            <InputCustom v-model.trim="questionnaire" name="Звание" data="" isRequired=""
+            <InputCustom v-model.trim="questionnaire.rank" name="Звание" data="" isRequired=""
 
             />
-            <InputCustom class="military-unit" v-model.trim="questionnaire" name="Воинская часть" data="" isRequired=""
-
-            />
-
-            <InputCustom v-model.trim="questionnaire" name="День рождения" data="" isRequired=""
+            <InputCustom class="military-unit" v-model.trim="questionnaire.military_unit" name="Воинская часть" data="" isRequired=""
 
             />
 
-            <InputCustom v-model.trim="questionnaire" name="Месяц рождения" data="дд.мм.гг" isRequired="" isType="date"
-            />
-            <InputCustom v-model.trim="questionnaire" name="Год рождения" data="дд.мм.гг" isRequired="" isType="date"
+            <InputCustom v-model.trim="questionnaire.birthdate.day" name="День рождения" data="" isRequired=""
+
             />
 
-            <InputCustom class="birthplace" v-model.trim="questionnaire" name="Место рождения" data="" isRequired=""
+            <InputCustom v-model.trim="questionnaire.birthdate.month" name="Месяц рождения" data="дд.мм.гг" isRequired="" isType="text"
+            />
+            <InputCustom v-model.trim="questionnaire.birthdate.year" name="Год рождения" data="дд.мм.гг" isRequired="" isType="text"
+            />
+
+            <InputCustom class="birthplace" v-model.trim="questionnaire.birthplace" name="Место рождения" data="" isRequired=""
 
             />
 
         </div>
         <div class="text-area">
             <label for="life-path">Жизненный путь</label>
-            <textarea v-model="test" id="life-path" class="life-path">
+            <textarea v-model="questionnaire.life_path" id="life-path" class="life-path">
 
             </textarea>
         </div>
 
         <div class="new-questionnaire__info-death">
-            <InputCustom v-model.trim="questionnaire" name="Дата смерти" data="" isRequired=""
+            <InputCustom v-model.trim="questionnaire.death_date.day" name="Деньи смерти" data="" isRequired=""
 
             />
 
-            <InputCustom v-model.trim="questionnaire" name="Месяц смерти" data="дд.мм.гг" isRequired="" isType="date"
+            <InputCustom v-model.trim="questionnaire.death_date.month" name="Месяц смерти" data="дд.мм.гг" isRequired="" isType="text"
             />
-            <InputCustom v-model.trim="questionnaire" name="Год смерти" data="дд.мм.гг" isRequired="" isType="date"
+            <InputCustom v-model.trim="questionnaire.death_date.year" name="Год смерти" data="дд.мм.гг" isRequired="" isType="text"
             />
 
-            <InputCustom class="death-place" v-model.trim="questionnaire" name="Место смерти" data="" isRequired=""
+            <InputCustom class="death-place" v-model.trim="questionnaire.death_place" name="Место смерти" data="" isRequired=""
 
             />
         </div>
@@ -73,7 +73,6 @@
             <div class="new-questionnaire__document-list__item">
 
                 <label>
-                    {{label}}
                     <input v-on="" type="checkbox">
                 </label>
                 <div class="new-questionnaire__document-list__item__info">
@@ -107,6 +106,25 @@
             return {
                 test: '',
                 questionnaire: {
+                    name: '',
+                    surname: '',
+                    patronymic: '',
+                    rank: '',
+                    military_unit: '',
+                    birthdate: {
+                        day: '',
+                        month: '',
+                        year: '',
+                    },
+                    birthplace: '',
+                    life_path: '',
+
+                    death_date: {
+                        day: '',
+                        month: '',
+                        year: '',
+                    },
+                    death_place: ''
 
                 }
             }
@@ -237,8 +255,7 @@
             overflow: auto;
             padding: 5px;
         }
-        /**/
-        /**/
+
         input[type='checkbox'],
         input[type='radio'] {
             --active: #C3523B;
