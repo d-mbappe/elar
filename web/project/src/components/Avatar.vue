@@ -10,7 +10,7 @@
 
         <div  class="helper"></div><!--
 
-    --><label v-if="!image" class="btn display-inline">
+    --><label v-if="!image" class="btn display-inline choose">
         Выберите файл
         <input type="file" name="image" @change="onChange" accept="image/*">
 
@@ -46,13 +46,20 @@
 
         data() {
             return {
-                imageL: this.imageURL
+                imageL: '',
+                change: false
             }
         },
 
+
         computed: {
             image() {
-                return this.imageL ? this.imageL : process.env.VUE_APP_URL + this.imageURL
+
+                if (this.imageURL && !this.change ) {
+                    return process.env.VUE_APP_URL + this.imageURL
+                }
+
+                return this.imageL
             }
         },
 
@@ -67,6 +74,7 @@
             onChange(e) {
                 var files = e.target.files;
                 this.createFile(files[0])
+                this.change = true
             },
 
             async createFile(file) {
@@ -85,7 +93,9 @@
             },
 
             removeFile() {
+                this.change = true;
                 this.imageL = '';
+                this.$emit('setImg', '')
             }
         }
     }
@@ -135,6 +145,11 @@
         padding: 3px 7px;
         border-radius: 5px;
         position: relative;
+
+        &.choose {
+            min-height: 25px;
+            max-width: 130px;
+        }
 
         &__remove, &__edit {
             position: absolute;
