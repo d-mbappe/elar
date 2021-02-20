@@ -69,7 +69,7 @@ class SignUpForm extends User
             [['email'], 'unique', 'message' => 'Пользователь с таким email уже существует'],
             [['name', 'surname'], 'required'],
             [['email', 'password', 'passwordRepeat'], 'required', 'on' => self::SCENARIO_FROM_SITE],
-            [['password', 'passwordRepeat', 'name', 'surname', 'patronymic', 'phone', 'photo'], 'string', 'max' => 255],
+            [['password', 'passwordRepeat', 'name', 'surname', 'patronymic', 'phone', 'photo', 'from'], 'string', 'max' => 255],
             [['password'], 'string', 'min'=> 6, 'max' => 255],
             [['birthdate'], 'date', 'format' => 'php:Y-m-d', 'on' => self::SCENARIO_FROM_SITE],
             [['birthdate'], 'date', 'format' => 'php:Y-m-d', 'on' => self::SCENARIO_FROM_OK],

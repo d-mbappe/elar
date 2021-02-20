@@ -64,6 +64,7 @@ class AuthController extends Controller
         $model = new SignUpForm();
         $model->setScenario(SignUpForm::SCENARIO_FROM_SITE);
         $model->load(Yii::$app->request->getBodyParams(), '');
+        $model->from = User::FROM_SITE;
         if ($model->register()) {
             $token = $this->tokenService->generateEmailConfirmationToken($model->id);
             $token->save();
