@@ -171,4 +171,39 @@ button {
   right: 10px;
 }
 
+.btn {
+  border:none;
+  box-shadow: none;
+  cursor: pointer;
+  margin-top: 15px;
+
+  width: 100%;
+
+  min-height: 50px;
+
+  font-size: 15px;
+  text-align: center;
+
+  border-radius: 5px;
+
+  &.orange {
+    background: $base-color;
+    color: $white;
+  }
+
+  &.white {
+    background: $white;
+    color: $black;
+  }
+
+  &:hover {
+    box-shadow: 0 0 10px rgba(0,0,0,0.4) inset;
+  }
+
+  &:active, &:focus {
+    box-shadow: 0 0 10px rgba(0,0,0,0.8) inset;
+  }
+
+}
+
 </style>
