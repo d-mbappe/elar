@@ -56,7 +56,7 @@
             image() {
 
                 if (this.imageURL && !this.change ) {
-                    return process.env.VUE_APP_URL + this.imageURL
+                    return this.imageURL
                 }
 
                 return this.imageL
