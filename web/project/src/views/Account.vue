@@ -56,27 +56,9 @@
                 return this.$store.state.profile
             },
             auth_social() {
-               return this.$store.state.auth_social;
+               return localStorage.auth_social;
             }
         },
-        //
-        // methods: {
-        //     setProfileImg(url) {
-        //         this.profile.photo = url;
-        //         console.log('profile', this.profile)
-        //     },
-        //
-        //     saveProfile() {
-        //         this.$store.dispatch('saveProfile', this.profile).then()
-        //     },
-        //
-        //     changeForm(e, curr) {
-        //         this.item = e.target.textContent;
-        //         this.currentOption = curr;
-        //
-        //     }
-        //
-        // }
     }
 </script>
 

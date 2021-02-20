@@ -56,7 +56,7 @@ export default new Vuex.Store({
         },
 
         set_social_auth (state) {
-            state.auth_social = true;
+            localStorage.setItem('auth_social', 'from_site')
         },
 
         get_cookie (state) {
@@ -113,6 +113,7 @@ export default new Vuex.Store({
             return new Promise((resolve, reject) => {
                 commit('logout')
                 localStorage.removeItem('token')
+                localStorage.removeItem('auth_social')
                 delete AXIOS.defaults.headers.common['Authorization']
                 resolve()
             })
@@ -150,7 +151,6 @@ export default new Vuex.Store({
 
                 AXIOS.get('/api/profile?expand=user')
                     .then(resp => {
-                        console.log('2314515125215',resp)
                         commit('set_profile', resp.data)
                     })
                     .catch(err => {
