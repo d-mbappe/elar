@@ -23,8 +23,8 @@
             <br>
         </div>
 
-        <button class="btn__edit" type="file" @change="onChange"><img src="../assets/icons/edit_logo.svg" alt="">
-            <input type="file" name="image" @change="onChange" accept="image/*">
+        <button @click="editImage" class="btn__edit" type="file" @change="onChange"><img src="../assets/icons/edit_logo.svg" alt="">
+            <input id="file" type="file" name="image" @change="onChange" accept="image/*">
         </button>
 
         <button class="btn__remove" @click="removeFile">
@@ -64,6 +64,10 @@
         },
 
         methods: {
+            editImage() {
+                document.getElementById('file').click();
+            },
+
             onDrop: function(e) {
                 e.stopPropagation();
                 e.preventDefault();
@@ -165,7 +169,6 @@
                 top: 0;
                 position: absolute;
                 opacity: 0;
-                z-index: 1 !important;
                 width: 100%;
                 left: 0;
                 cursor: pointer;
