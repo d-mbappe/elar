@@ -6,7 +6,7 @@
                    :autocomplete="autocomplete"
                    @input="updateData($event.target.value)"
                    class="field__input"
-                   :class="{error : isInvalid}"
+                   :class="{error : isInvalid, none : border}"
                    :placeholder="1"
 
             >
@@ -47,7 +47,9 @@
                 default: 'nope',
             },
 
-            isInvalid: {}
+            isInvalid: {},
+
+            border: ''
         },
 
         data() {
@@ -92,12 +94,18 @@
 
         background-color: $white;
         border-radius: 5px;
-        border: none;
+        /*border: none;*/
 
         -webkit-appearance: none;
         -moz-appearance: none;
 
         font-size: 15px;
+
+        box-sizing: border-box;
+        width: var(--fieldWidth, 100%);
+        height: var(--fieldHeight, 3rem);
+        padding: var(--fieldPaddingTop, 1.25rem) var(--uiFieldPaddingRight) var(--fieldPaddingBottom, .5rem) var(--uiFieldPaddingLeft);
+        border: 1px solid #D1CFC6;
 
     }
 
@@ -129,13 +137,11 @@
     }
 
     .field__input{
-        box-sizing: border-box;
-        width: var(--fieldWidth, 100%);
-        height: var(--fieldHeight, 3rem);
-        padding: var(--fieldPaddingTop, 1.25rem) var(--uiFieldPaddingRight) var(--fieldPaddingBottom, .5rem) var(--uiFieldPaddingLeft);
-        /*border-bottom: var(--uiFieldBorderWidth) solid var(--fieldBorderColor, rgba(0, 0, 0, .25));*/
-        border: 1px solid #D1CFC6;
-        /*border: 1px solid black;*/
+        /*box-sizing: border-box;*/
+        /*width: var(--fieldWidth, 100%);*/
+        /*height: var(--fieldHeight, 3rem);*/
+        /*padding: var(--fieldPaddingTop, 1.25rem) var(--uiFieldPaddingRight) var(--fieldPaddingBottom, .5rem) var(--uiFieldPaddingLeft);*/
+        /*border: 1px solid #D1CFC6;*/
     }
 
     .field__input:focus{
@@ -283,5 +289,9 @@
 
         display: grid;
         /*grid-gap: 30px;*/
+    }
+
+    .none {
+        border: none;
     }
 </style>

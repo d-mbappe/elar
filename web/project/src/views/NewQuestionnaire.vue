@@ -69,22 +69,46 @@
             документы, относящиеся к Вашему Герою или пропустить, нажав на кнопку «Отправить».
         </p>
 
-        <div class="new-questionnaire__document-list">
-            <div class="new-questionnaire__document-list__item">
+        <p class="new-questionnaire__document-found"> Найдено допументов: 22</p>
 
+        <div class="new-questionnaire__document-list">
+            <div class="new-questionnaire__document-list__item" v-for="(item, i) in documentList"  >
                 <label>
                     <input v-on="" type="checkbox">
                 </label>
+
                 <div class="new-questionnaire__document-list__item__info">
-                    <span class=""></span>
-                    <span></span>
+                    <span class="name">Шмулевич Леонид Семенович </span>
+                    <span class="rank">Инженер-полковник Место службы: 46-я стрелковая дивизия</span>
                 </div>
-                <span></span>
+                <button  class="btn white extend">Дополнить анкету данными из документа</button>
             </div>
         </div>
 
+        <div class="new-questionnaire__link">
+            <p class="new-questionnaire__link__title">Или укажите ссылку на документы из проектов Память народа, ОБД Мемориал, ОБД Подвиг народа</p>
+            <div class="new-questionnaire__link__item" v-for="(item, i) in linkList">
+                <a :href="item">{{item}}
+                </a>
 
+                <div class="remove-btn">
+                    <button @click="removeLink(i)" class="">+</button>
+                </div>
+
+
+            </div>
+            <div class="new-questionnaire__link__input">
+                <InputCustom v-model.trim="test" name="Вставьте ссылку с проекта" data="" isRequired=""
+                             border="none"
+                />
+                <button @click="addLink" class="">+</button>
+            </div>
+        </div>
+
+        <PrivacyPolicy/>
     </div>
+
+
 
 </section>
 </template>
@@ -92,6 +116,7 @@
 <script>
     import ProjectInfo from "../components/ProjectInfo";
     import InputCustom from "../components/simple/InputCustom";
+    import PrivacyPolicy from "../components/PrivacyPolicy";
 
     import {email, minLength, numeric, required, sameAs} from "vuelidate/lib/validators";
 
@@ -100,11 +125,16 @@
 
     export default {
         name: "NewQuestionnaire",
-        components: {ProjectInfo, InputCustom},
+        components: {ProjectInfo, InputCustom, PrivacyPolicy},
 
         data() {
             return {
                 test: '',
+                hover: false,
+                documentList: [1,2,3,4,5,6],
+                linkList: [
+                    "https://pamyat-naroda.ru/heroes/memorial-chelovek_vpp2001446844/"
+                ],
                 questionnaire: {
                     name: '',
                     surname: '',
@@ -128,6 +158,17 @@
 
                 }
             }
+        },
+
+        methods: {
+            addLink() {
+                this.linkList.push(this.test)
+                this.test= ''
+            },
+
+            removeLink(i) {
+                this.linkList.splice(i, 1)
+            }
         }
     }
 </script>
@@ -149,7 +190,6 @@
     }
 
     .new-questionnaire {
-        /*padding: 0 160px 55px 120px;*/
         width: 100%;
         margin: 40px 120px;
         padding: 30px 20px;
@@ -161,14 +201,15 @@
 
         font-family: "Roboto", sans-serif;
         font-weight: 400;
-        font-size: 22px;
-
+        font-size: 14px;
         /*padding: 40px 5px 20px;*/
 
         border-radius: 10px;
 
         &__title {
             font-family: "Roboto Slab", sans-serif;
+            font-size: 22px;
+
         }
 
         &__form {
@@ -241,6 +282,11 @@
             font-size: 16px;
         }
 
+        &__document-found {
+            margin: 15px 0 5px;
+            color: #5F5F5F;
+        }
+
         &__document-list {
             width: 100%;
             height: 320px;
@@ -250,9 +296,122 @@
             border-radius: 5px;
 
             overflow: auto;
-            padding: 5px;
+            padding: 5px 0;
+
+            &__item {
+                display: flex;
+                padding: 12px 19px;
+                position: relative;
+
+                cursor: pointer;
+                transition: all ease .3s;
+
+                &:hover  {
+                    background-color: #F1F1F1;
+                    .extend {
+                        opacity: 1;
+                    }
+                }
+
+                &__info {
+                    margin-left: 15px;
+
+                    span {
+                        display: inherit;
+
+                        &.name {
+                            color: #1677E9;
+                        }
+                        &.rank {
+                            color: #5F5F5F;
+                        }
+                    }
+                }
+
+                .extend {
+                    opacity: 0;
+                    position: absolute;
+                    right: 19px;
+                    bottom: 12px;
+
+                    max-width: 150px;
+                    min-height: 36px;
+                    font-size: 12px;
+
+                    border: 1px solid #D9D9D9;
+                    transition: opacity .3s linear;
+
+                }
+            }
         }
 
+        &__link {
+            margin-top: 20px;
+
+            &__item {
+                margin-top: 10px;
+
+                a {
+                    color: #1677E9;
+
+                    &:hover {
+                        opacity: .8;
+                    }
+                }
+
+                .remove-btn {
+                    width: 20px;
+                    height: 15px;
+                    display: inline-block;
+                    position: relative;
+
+                    button {
+                        position: absolute;
+                        font-size: 30px;
+                        color: #7E7E7E;
+                        font-weight: 200;
+                        transform: rotate(45deg);
+
+                        top: -13px;
+                        right: -10px;
+                    }
+                }
+
+
+            }
+
+
+            &__input {
+                display: flex;
+                align-items: flex-end;
+                margin: 10px 0 35px;
+
+                /*Переопределение кастомного инпута*/
+                .field-wrap {
+                    border-top: 1px solid #D1CFC6 !important;
+                    border-bottom: 1px solid #D1CFC6 !important;
+                    border-left: 1px solid #D1CFC6 !important;
+
+                    border-top-left-radius: 5px;
+                    border-bottom-left-radius: 5px;
+
+                }
+
+                button {
+                    font-size: 25px;
+                    color: #767676;
+                    width: 36px;
+                    height: 50px;
+                    border: 1px solid #C0C0C0;
+
+                    border-top-right-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                }
+            }
+        }
+
+
+        /*Кастомный чекбокс*/
         input[type='checkbox'],
         input[type='radio'] {
             --active: #C3523B;
