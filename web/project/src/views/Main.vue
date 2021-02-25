@@ -9,25 +9,10 @@
                      class="cropper"
                      imageClass="image"
                      background-class="cropper-background"
+                     imageRestriction="none"
             />
         </div>
-        <button class="btn white change" @click="rotate(-90, )">rotateL</button>
-        <button class="btn white change" @click="rotate(90, )">rotateR</button>
-        <button class="btn white change" @click="zoom(2)">+</button>
-        <button class="btn white change" @click="zoom(0.5)">-</button>
 
-        <button class="btn white change" title="Move Top" @click="move('top')">
-           top
-        </button>
-        <button class="btn white change" title="Move Left" @click="move('left')">
-            left
-        </button>
-        <button class="btn white change" title="Move Right" @click="move('right')">
-            right
-        </button>
-        <button class="btn white change" title="Move Bottom" @click="move('bottom')">
-            bottom
-        </button>
 
     </section>
 
@@ -80,15 +65,19 @@
 
             move(direction) {
                 if (direction === 'left') {
-                    this.$refs.cropper.move(-this.result.coordinates.width );
+                    this.$refs.cropper.move(-this.result.coordinates.width /8);
                 } else if (direction === 'right') {
-                    this.$refs.cropper.move(this.result.coordinates.width );
+                    this.$refs.cropper.move(this.result.coordinates.width /8);
                 } else if (direction === 'top') {
-                    this.$refs.cropper.move(0, -this.result.coordinates.height / 4);
+                    this.$refs.cropper.move(0, -this.result.coordinates.height / 8);
                 } else if (direction === 'bottom') {
-                    this.$refs.cropper.move(0, this.result.coordinates.height / 4);
+                    this.$refs.cropper.move(0, this.result.coordinates.height / 8);
                 }
             },
+
+            reset() {
+                this.$refs.cropper.reset()
+            }
         },
     };
 </script>
