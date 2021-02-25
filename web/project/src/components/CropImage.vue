@@ -29,13 +29,13 @@
                         <img src="../assets/cropper/minus.png" alt="">
                     </button>
 
-                    <button class="btn white change" title="Move Top" @click="move('top')">
+                    <button class="btn white change" title="Move Top" @click="move('left')">
                         <img class="left" src="../assets/cropper/arrow.png" alt="">
                     </button>
-                    <button class="btn white change" title="Move Left" @click="move('left')">
+                    <button class="btn white change" title="Move Left" @click="move('right')">
                         <img src="../assets/cropper/arrow.png" alt="">
                     </button>
-                    <button class="btn white change" title="Move Right" @click="move('right')">
+                    <button class="btn white change" title="Move Right" @click="move('top')">
                         <img class="top" src="../assets/cropper/arrow.png" alt="">
                     </button>
                     <button class="btn white change" title="Move Bottom" @click="move('bottom')">

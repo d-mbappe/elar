@@ -18,7 +18,7 @@
         </label><!--
           --><div class="hidden display-inline align-center" v-else v-bind:class="{ 'image': true }">
         <div class="image__wrap">
-            <img :src="image" alt="" class="img" />
+            <img :src="modal ? imageURL :image" alt="" class="img" />
             <br>
             <br>
         </div>
@@ -42,7 +42,7 @@
 <script>
     export default {
         name: "Avatar",
-        props: ['imageURL'],
+        props: ['imageURL', 'modal'],
 
         data() {
             return {

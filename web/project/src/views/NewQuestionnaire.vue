@@ -121,7 +121,7 @@
             <div class="media-content__photo">
                 <div class="media-content__photo__item">
                     <p class="media-content__photo__item__title">Фотография героя ВОВ</p>
-                    <Avatar @setImg="setProfileImg($event)" :imageURL="profile.photo" />
+                    <Avatar @setImg="setProfileImg($event)" :imageURL="img" :modal="changed" />
                 </div>
                 <div class="media-content__photo__item">
                     <p class="media-content__photo__item__title">Ваша фотография</p>
@@ -162,6 +162,7 @@
 
         data() {
             return {
+                changed: true,
                 img: '',
                 modal: false,
                 test: '',
@@ -205,8 +206,11 @@
 
         methods: {
             set(url) {
-                console.log("newwwwwwwwwwww",url)
+                /*
+                для будущего принятия фотографий с бэка
                 this.profile.photo = url;
+                */
+                this.img = url;
                 this.modal = false
             },
 
@@ -220,14 +224,15 @@
             },
 
             hide() {
-                console.log('hide')
                 this.modal = false
             },
 
             setProfileImg(url) {
                 this.profile.photo = url;
+                this.changed = true
                 this.img = url;
-                this.modal = true;
+
+                url ? this.modal = true : ''
             },
         }
     }
@@ -267,7 +272,6 @@
         font-family: "Roboto", sans-serif;
         font-weight: 400;
         font-size: 14px;
-        /*padding: 40px 5px 20px;*/
 
         border-radius: 10px;
 
