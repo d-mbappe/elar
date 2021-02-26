@@ -11,8 +11,11 @@
                          @change="onChange"
                          class="cropper"
                          imageClass="image"
-                         background-class="cropper-background"
+                         backgroundClass="cropper-background"
                          imageRestriction="none"
+                         :stencil-props="{
+                            aspectRatio: 3/4,
+                        }"
                 />
 
                 <div class="cropper__btn">
@@ -183,6 +186,7 @@
     }
     .cropper-background {
         background: none !important;
+        min-height: 800px !important;
     }
     .image-background {
         position: absolute;
@@ -190,6 +194,17 @@
         height: calc(100% + 20px);
         left: -10px;
         top: -10px;
+    }
+
+    .vue-advanced-cropper__image-wrapper {
+        height: 700px;
+    }
+
+    .vue-advanced-cropper__foreground {
+        transform: none;
+        top: 0;
+        left: 0;
+        height: 700px !important;
     }
 
     .image {

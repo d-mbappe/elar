@@ -121,12 +121,12 @@
             <div class="media-content__photo">
                 <div class="media-content__photo__item">
                     <p class="media-content__photo__item__title">Фотография героя ВОВ</p>
-                    <Avatar @setImg="setProfileImg($event)" :imageURL="img" :modal="changed" />
+                    <Avatar @click="currentPhoto === 'military'" ref="avatar" @setImg="setProfileImg($event, 'military')" :imageURL="img" :modal="changed" />
                 </div>
                 <div class="media-content__photo__item">
                     <p class="media-content__photo__item__title">Ваша фотография</p>
 
-                    <Avatar/>
+                    <Avatar @click="currentPhoto === 'military'" ref="avatar" @setImg="setProfileImg($event, 'no')" :imageURL="imgUser" :modal="changed" />
                 </div>
             </div>
 
@@ -141,6 +141,10 @@
 </template>
 
 <script>
+    import VideoPlayer from "../components/VideoPlayer";
+    import 'video.js/dist/video-js.css'
+
+
     import ProjectInfo from "../components/ProjectInfo";
     import InputCustom from "../components/simple/InputCustom";
     import PrivacyPolicy from "../components/PrivacyPolicy";
@@ -158,12 +162,26 @@
 
     export default {
         name: "NewQuestionnaire",
-        components: {ProjectInfo, InputCustom, PrivacyPolicy, CropImage, Avatar, Cropper},
+        components: {ProjectInfo, InputCustom, PrivacyPolicy, CropImage, Avatar, Cropper, VideoPlayer},
 
         data() {
             return {
+                videoOptions: {
+                    autoplay: true,
+                    controls: true,
+                    sources: [
+                        {
+                            src:
+                                "https://vimeo.com/164438721",
+                            type: "application/x-mpegURL"
+                        }
+                    ]
+                },
+                /**/
+                currentPhoto: '',
                 changed: true,
                 img: '',
+                imgUser: '',
                 modal: false,
                 test: '',
                 hover: false,
@@ -227,17 +245,16 @@
                 this.modal = false
             },
 
-            setProfileImg(url) {
+            setProfileImg(url , user) {
                 this.profile.photo = url;
-                this.changed = true
-                this.img = url;
+                this.changed = true;
+                user === 'military'? this.img = url : this.imgUser = url;
 
                 url ? this.modal = true : ''
             },
         }
     }
 </script>
-
 <style lang="scss" >
     @import "../assets/variables";
 
@@ -644,6 +661,10 @@
 
                         background-color: rgba(0, 0, 0, .3);
                         border: 1px dashed $white;
+
+                        .btn.display-inline.choose {
+                            overflow: hidden;
+                        }
 
                         .custom__preview {
                             margin-top: 65px;
