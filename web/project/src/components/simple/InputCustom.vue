@@ -76,6 +76,11 @@
 </script>
 <style lang="scss">
     @import "../../assets/variables";
+    $uiFieldPlaceholderColor: #767676;
+    $uiFieldBorderWidth:  2px;
+    $uiFieldPaddingRight: 1rem;
+    $uiFieldPaddingLeft:  1rem;
+    $uiFieldBorderColorActive:  rgba(22, 22, 22, 1);
 
     /*
     =====
@@ -90,31 +95,20 @@
 
 
     .field__input{
-        --uiFieldPlaceholderColor: var(--fieldPlaceholderColor, #767676);
-
         background-color: $white;
         border-radius: 5px;
-        /*border: none;*/
-
-        -webkit-appearance: none;
-        -moz-appearance: none;
+        border: none;
 
         font-size: 15px;
-
-        box-sizing: border-box;
-        width: var(--fieldWidth, 100%);
-        height: var(--fieldHeight, 3rem);
-        padding: var(--fieldPaddingTop, 1.25rem) var(--uiFieldPaddingRight) var(--fieldPaddingBottom, .5rem) var(--uiFieldPaddingLeft);
-        border: 1px solid #D1CFC6;
 
     }
 
     .field__input:focus::-webkit-input-placeholder{
-        color: var(--uiFieldPlaceholderColor);
+        color: $uiFieldPlaceholderColor;
     }
 
     .field__input:focus::-moz-placeholder{
-        color: var(--uiFieldPlaceholderColor);
+        color: $uiFieldPlaceholderColor;
     }
 
     /*
@@ -124,24 +118,18 @@
     */
 
     .field{
-        --uiFieldBorderWidth: var(--fieldBorderWidth, 2px);
-        --uiFieldPaddingRight: var(--fieldPaddingRight, 1rem);
-        --uiFieldPaddingLeft: var(--fieldPaddingLeft, 1rem);
-        --uiFieldBorderColorActive: var(--fieldBorderColorActive, rgba(22, 22, 22, 1));
-
-        display: var(--fieldDisplay, inline-flex);
+        display:  inline-flex;
         position: relative;
-        /*font-size: var(--fieldFontSize, 1rem);*/
         font-size: 15px;
         font-weight: 700;
     }
 
     .field__input{
-        /*box-sizing: border-box;*/
-        /*width: var(--fieldWidth, 100%);*/
-        /*height: var(--fieldHeight, 3rem);*/
-        /*padding: var(--fieldPaddingTop, 1.25rem) var(--uiFieldPaddingRight) var(--fieldPaddingBottom, .5rem) var(--uiFieldPaddingLeft);*/
-        /*border: 1px solid #D1CFC6;*/
+        box-sizing: border-box;
+        width:  100%;
+        height: 3rem;
+        padding: 1.25rem  $uiFieldPaddingRight  .5rem $uiFieldPaddingLeft;
+        border: 1px solid #D1CFC6;
     }
 
     .field__input:focus{
@@ -149,22 +137,22 @@
     }
 
     .field__input::-webkit-input-placeholder{
-        opacity: 0;
+        visibility: hidden;
         transition: opacity .2s ease-out;
     }
 
     .field__input::-moz-placeholder{
-        opacity: 0;
+        visibility: hidden;
         transition: opacity .2s ease-out;
     }
 
     .field__input:focus::-webkit-input-placeholder{
-        opacity: 0;
+        visibility: hidden;
         transition-delay: .2s;
     }
 
     .field__input:focus::-moz-placeholder{
-        opacity: 0;
+        visibility: hidden;
         transition-delay: .2s;
     }
 
@@ -200,24 +188,19 @@
 
     .field__label{
         position: absolute;
-        left: var(--uiFieldPaddingLeft);
+        left: $uiFieldPaddingLeft;
         top: calc(50% - .5em);
         color: #7E7E7E;
 
         line-height: 1;
-        font-size: var(--fieldHintFontSize, inherit);
-        /*font-size: 12px;*/
-
-        transition: top .2s cubic-bezier(0.9, -0.15, 0.1, 1.15), opacity .2s ease-out, font-size .2s ease-out;
-        will-change: bottom, opacity, font-size;
+        font-size:  inherit;
+        transition: all .2s linear;
     }
 
     .field__input:focus ~ .field__label-wrap .field__label,
     .field__input:not(:placeholder-shown) ~ .field__label-wrap .field__label{
-        /*--fieldHintFontSize: var(--fieldHintFontSizeFocused, .75rem);*/
-        --fieldHintFontSize: var(--fieldHintFontSizeFocused, 12px);
-
-        top: var(--fieldHintTopHover, .25rem);
+        font-size: 12px;
+        top: .25rem;
     }
 
 
@@ -226,7 +209,7 @@
     */
 
     .field_v3 .field__label-wrap::after{
-        border: var(--uiFieldBorderWidth) solid var(--uiFieldBorderColorActive);
+        border: $uiFieldBorderWidth solid $uiFieldBorderWidth;
         will-change: opacity;
         transition: opacity .2s ease-out, opacity .2s ease-out;
     }
@@ -242,23 +225,16 @@
     */
 
     .field{
-        /*--fieldBorderColor: #D1C4E9;
-        --fieldBorderColorActive: $base-hover;*/
-
-        /*--fieldBorderColor: #D1C4E9;*/
-        /*--fieldBorderColorActive: #673AB7;*/
+        width: 100%;
     }
 
     .field__helper {
-        /*position: absolute;*/
         font-size: 14px;
         font-weight: 400;
         color: $white;
         padding: 10px 15px;
-        /*color: black;*/
-        /*bottom: -25px;
-        left: 15px;*/
     }
+
     .required:after {
         content: ' *';
         color: #EE4F20;
@@ -281,17 +257,10 @@
     }
 
     .field-wrap{
-        /*box-sizing: border-box;*/
         width: 100%;
         max-width: 480px;
         margin-top: 10px;
-        /*padding: 1rem;*/
 
-        display: grid;
-        /*grid-gap: 30px;*/
-    }
-
-    .none {
-        border: none;
+        display: block;
     }
 </style>
