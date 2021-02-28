@@ -1,143 +1,141 @@
 <template>
-<section>
-    <ProjectInfo/>
-    <CropImage
-            @hideModal="hide"
-            @setImg="set($event)"
-            v-if="modal"
-            :img="img"
-    />
+    <section>
+        <ProjectInfo/>
+        <CropImage
+                @hideModal="hide"
+                @setImg="set($event)"
+                v-if="modal"
+                :img="currentPhoto === 'military' ? img : imgUser"
+        />
 
-    <div class="page-selection">
-        Новая анкета
-    </div>
-    <div class="content-wrapper">
+        <div class="page-selection">
+            Новая анкета
+        </div>
+        <div class="content-wrapper">
 
-        <div class="new-questionnaire">
+            <div class="new-questionnaire">
 
-            <div class="new-questionnaire__title">
-                Добавление героя ВОВ
-            </div>
-
-            <div class="new-questionnaire__form">
-                <InputCustom  v-model.trim="questionnaire.name" name="Имя" data="" isRequired="true"
-
-                />
-                <InputCustom v-model.trim="questionnaire.surname" name="Фамилия" data="" isRequired="true"
-
-                />
-                <InputCustom v-model.trim="questionnaire.patronymic" name="Отчество" data="" isRequired=""
-
-                />
-                <InputCustom v-model.trim="questionnaire.rank" name="Звание" data="" isRequired=""
-
-                />
-                <InputCustom class="military-unit" v-model.trim="questionnaire.military_unit" name="Воинская часть" data="" isRequired=""
-
-                />
-
-                <InputCustom v-model.trim="questionnaire.birthdate.day" name="День рождения" data="" isRequired=""
-
-                />
-
-                <InputCustom v-model.trim="questionnaire.birthdate.month" name="Месяц рождения" data="дд.мм.гг" isRequired="" isType="text"
-                />
-                <InputCustom v-model.trim="questionnaire.birthdate.year" name="Год рождения" data="дд.мм.гг" isRequired="" isType="text"
-                />
-
-                <InputCustom class="birthplace" v-model.trim="questionnaire.birthplace" name="Место рождения" data="" isRequired=""
-
-                />
-
-            </div>
-            <div class="text-area">
-                <label for="life-path">Жизненный путь</label>
-                <textarea v-model="questionnaire.life_path" id="life-path" class="life-path">
-
-            </textarea>
-            </div>
-
-            <div class="new-questionnaire__info-death">
-                <InputCustom v-model.trim="questionnaire.death_date.day" name="Деньи смерти" data="" isRequired=""
-
-                />
-
-                <InputCustom v-model.trim="questionnaire.death_date.month" name="Месяц смерти" data="дд.мм.гг" isRequired="" isType="text"
-                />
-                <InputCustom v-model.trim="questionnaire.death_date.year" name="Год смерти" data="дд.мм.гг" isRequired="" isType="text"
-                />
-
-                <InputCustom class="death-place" v-model.trim="questionnaire.death_place" name="Место смерти" data="" isRequired=""
-
-                />
-            </div>
-
-            <button class="btn orange">Поиск в базах данных Минобороны России</button>
-
-            <p class="new-questionnaire__bd-info">В базах данных Минобороны России найдены похожие записи. Вы можете выбрать
-                документы, относящиеся к Вашему Герою или пропустить, нажав на кнопку «Отправить».
-            </p>
-
-            <p class="new-questionnaire__document-found"> Найдено допументов: 22</p>
-
-            <div class="new-questionnaire__document-list">
-                <div class="new-questionnaire__document-list__item" v-for="(item, i) in documentList"  >
-                    <label>
-                        <input v-on="" type="checkbox">
-                    </label>
-
-                    <div class="new-questionnaire__document-list__item__info">
-                        <span class="name">Шмулевич Леонид Семенович </span>
-                        <span class="rank">Инженер-полковник Место службы: 46-я стрелковая дивизия</span>
-                    </div>
-                    <button  class="btn white extend">Дополнить анкету данными из документа</button>
+                <div class="new-questionnaire__title">
+                    Добавление героя ВОВ
                 </div>
-            </div>
 
-            <div class="new-questionnaire__link">
-                <p class="new-questionnaire__link__title">Или укажите ссылку на документы из проектов Память народа, ОБД Мемориал, ОБД Подвиг народа</p>
-                <div class="new-questionnaire__link__item" v-for="(item, i) in linkList">
-                    <a :href="item">{{item}}
-                    </a>
+                <div class="new-questionnaire__form">
+                    <InputCustom  v-model.trim="questionnaire.name" name="Имя" data="" isRequired="true"
 
-                    <div class="remove-btn">
-                        <button @click="removeLink(i)" class="">+</button>
-                    </div>
-
-
-                </div>
-                <div class="new-questionnaire__link__input">
-                    <InputCustom v-model.trim="test" name="Вставьте ссылку с проекта" data="" isRequired=""
-                                 border="none"
                     />
-                    <button @click="addLink" class="">+</button>
+                    <InputCustom v-model.trim="questionnaire.surname" name="Фамилия" data="" isRequired="true"
+
+                    />
+                    <InputCustom v-model.trim="questionnaire.patronymic" name="Отчество" data="" isRequired=""
+
+                    />
+                    <InputCustom v-model.trim="questionnaire.rank" name="Звание" data="" isRequired=""
+
+                    />
+                    <InputCustom class="military-unit" v-model.trim="questionnaire.military_unit" name="Воинская часть" data="" isRequired=""
+
+                    />
+
+                    <InputCustom v-model.trim="questionnaire.birthdate.day" name="День рождения" data="" isRequired=""
+
+                    />
+
+                    <InputCustom v-model.trim="questionnaire.birthdate.month" name="Месяц рождения" data="дд.мм.гг" isRequired="" isType="text"
+                    />
+                    <InputCustom v-model.trim="questionnaire.birthdate.year" name="Год рождения" data="дд.мм.гг" isRequired="" isType="text"
+                    />
+
+                    <InputCustom class="birthplace" v-model.trim="questionnaire.birthplace" name="Место рождения" data="" isRequired=""
+
+                    />
+
                 </div>
+                <div class="text-area">
+                    <label for="life-path">Жизненный путь</label>
+                    <textarea v-model="questionnaire.life_path" id="life-path" class="life-path">
+
+                </textarea>
+                </div>
+
+                <div class="new-questionnaire__info-death">
+                    <InputCustom v-model.trim="questionnaire.death_date.day" name="Деньи смерти" data="" isRequired=""
+
+                    />
+
+                    <InputCustom v-model.trim="questionnaire.death_date.month" name="Месяц смерти" data="дд.мм.гг" isRequired="" isType="text"
+                    />
+                    <InputCustom v-model.trim="questionnaire.death_date.year" name="Год смерти" data="дд.мм.гг" isRequired="" isType="text"
+                    />
+
+                    <InputCustom class="death-place" v-model.trim="questionnaire.death_place" name="Место смерти" data="" isRequired=""
+
+                    />
+                </div>
+
+                <button class="btn orange">Поиск в базах данных Минобороны России</button>
+
+                <p class="new-questionnaire__bd-info">В базах данных Минобороны России найдены похожие записи. Вы можете выбрать
+                    документы, относящиеся к Вашему Герою или пропустить, нажав на кнопку «Отправить».
+                </p>
+
+                <p class="new-questionnaire__document-found"> Найдено допументов: 22</p>
+
+                <div class="new-questionnaire__document-list">
+                    <div class="new-questionnaire__document-list__item" v-for="(item, i) in documentList"  >
+                        <label>
+                            <input v-on="" type="checkbox">
+                        </label>
+
+                        <div class="new-questionnaire__document-list__item__info">
+                            <span class="name">Шмулевич Леонид Семенович </span>
+                            <span class="rank">Инженер-полковник Место службы: 46-я стрелковая дивизия</span>
+                        </div>
+                        <button  class="btn white extend">Дополнить анкету данными из документа</button>
+                    </div>
+                </div>
+
+                <div class="new-questionnaire__link">
+                    <p class="new-questionnaire__link__title">Или укажите ссылку на документы из проектов Память народа, ОБД Мемориал, ОБД Подвиг народа</p>
+                    <div class="new-questionnaire__link__item" v-for="(item, i) in linkList">
+                        <a :href="item">{{item}}
+                        </a>
+
+                        <div class="remove-btn">
+                            <button @click="removeLink(i)" class="">+</button>
+                        </div>
+
+
+                    </div>
+                    <div class="new-questionnaire__link__input">
+                        <InputCustom v-model.trim="test" name="Вставьте ссылку с проекта" data="" isRequired=""
+                                     border="none"
+                        />
+                        <button @click="addLink" class="">+</button>
+                    </div>
+                </div>
+
+                <PrivacyPolicy/>
             </div>
 
-            <PrivacyPolicy/>
-        </div>
+            <div class="media-content">
+                <div class="media-content__photo">
+                    <div class="media-content__photo__item">
+                        <p class="media-content__photo__item__title">Фотография героя ВОВ</p>
 
-        <div class="media-content">
-            <div class="media-content__photo">
-                <div class="media-content__photo__item">
-                    <p class="media-content__photo__item__title">Фотография героя ВОВ</p>
-                    <Avatar @click="currentPhoto === 'military'" ref="avatar" @setImg="setProfileImg($event, 'military')" :imageURL="img" :modal="changed" />
-                </div>
-                <div class="media-content__photo__item">
-                    <p class="media-content__photo__item__title">Ваша фотография</p>
+                        <Avatar ref="avatar" @setImg="setProfileImg($event, 'military')" :imageURL="img" :modal="changed" />
+                    </div>
+                    <div class="media-content__photo__item">
+                        <p class="media-content__photo__item__title">Ваша фотография</p>
 
-                    <Avatar @click="currentPhoto === 'military'" ref="avatar" @setImg="setProfileImg($event, 'no')" :imageURL="imgUser" :modal="changed" />
+                        <Avatar ref="avatar" @setImg="setProfileImg($event, 'user')" :imageURL="imgUser" :modal="changed" />
+
+                    </div>
                 </div>
+
             </div>
-
         </div>
-    </div>
 
-
-
-
-
-</section>
+    </section>
 </template>
 
 <script>
@@ -228,7 +226,8 @@
                 для будущего принятия фотографий с бэка
                 this.profile.photo = url;
                 */
-                this.img = url;
+                this.currentPhoto === 'military' ? this.img = url : this.imgUser = url;
+
                 this.modal = false
             },
 
@@ -248,7 +247,14 @@
             setProfileImg(url , user) {
                 this.profile.photo = url;
                 this.changed = true;
-                user === 'military'? this.img = url : this.imgUser = url;
+
+                if (user === 'military') {
+                    this.currentPhoto = 'military';
+                    this.img = url;
+                } else {
+                    this.currentPhoto = 'user';
+                    this.imgUser = url;
+                }
 
                 url ? this.modal = true : ''
             },

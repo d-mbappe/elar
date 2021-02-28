@@ -1,40 +1,40 @@
 <template>
-    <section class="avatar">
-
+    <section class="avatar" >
         <div class="helper"></div><!--
         --><div class="drop display-inline align-center" @dragover.prevent @drop="onDrop">
-        <div class="custom__preview" v-if="!image">
+        <!--Превью для выбора фото-->
+        <div @click="chooseFile" class="custom__preview" v-if="!image">
             <img class="custom__preview__logo" src="../assets/icons/avatar_logo.svg" alt="">
-            <p class="custom__preview__title">Перетащите фотографию сюда  или нажмите:</p>
-        </div>
+            <p class="custom__preview__title">Перетащите фотографию сюда
+                или нажмите:</p>
 
-        <div  class="helper"></div><!--
-
-    --><label v-if="!image" class="btn display-inline choose">
-        Выберите файл
-        <input type="file" name="image" @change="onChange" accept="image/*">
-
-
-        </label><!--
-          --><div class="hidden display-inline align-center" v-else v-bind:class="{ 'image': true }">
-        <div class="image__wrap">
-            <img :src="modal ? imageURL :image" alt="" class="img" />
-            <br>
-            <br>
-        </div>
-
-        <button @click="editImage" class="btn__edit" type="file" @change="onChange"><img src="../assets/icons/edit_logo.svg" alt="">
-            <input id="file" type="file" name="image" @change="onChange" accept="image/*">
-        </button>
-
-        <button class="btn__remove" @click="removeFile">
-            <img src="../assets/icons/remove_logp.svg" alt="">
-        </button>
-
-        </div>
+            <label  class="btn display-inline choose">
+                Выберите файл
             </label>
+            <!--Скрытый инпут для выбора файлов-->
+            <input id="choose" type="file" name="image" @change="onChange" accept="image/*">
+        </div>
+
+        <!--Отображение выбранного фото-->
+        <div class="hidden display-inline align-center" v-else v-bind:class="{ 'image': true }">
+            <div class="image__wrap">
+                <img :src="modal ? imageURL : image" alt="" class="img" />
+                <br>
+                <br>
+            </div>
+
+            <button @click="editImage" class="btn__edit" type="file" @change="onChange"><img src="../assets/icons/edit_logo.svg" alt="">
+                <input id="file" type="file" name="image" @change="onChange" accept="image/*">
+            </button>
+
+            <button class="btn__remove" @click="removeFile">
+                <img src="../assets/icons/remove_logp.svg" alt="">
+            </button>
 
         </div>
+        </label>
+
+    </div>
 
     </section>
 </template>
@@ -54,7 +54,6 @@
 
         computed: {
             image() {
-
                 if (this.imageURL && !this.change ) {
                     return this.imageURL
                 }
@@ -64,8 +63,12 @@
         },
 
         methods: {
+            chooseFile() {
+                !this.image ? document.getElementById('choose').click() : '';
+            },
+
             editImage() {
-                document.getElementById('file').click();
+                this.$emit('setImg', this.imageURL)
             },
 
             onDrop: function(e) {
@@ -108,6 +111,16 @@
     .avatar {
         width: 185px;
         margin: 0 auto;
+
+        cursor: pointer;
+        border-radius: 10px;
+        transition: all .2s ease;
+
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 1.5;
+        }
     }
 
     .drop {
@@ -117,6 +130,8 @@
 
         background-color: #AEA4A1;
         border-radius: 10px;
+
+
     }
     .custom__preview {
         margin-top: 40px;
@@ -124,6 +139,8 @@
         color: white;
         font-size: 14px;
         line-height: 17px;
+
+        height: calc(100% - 65px);
 
         &__logo {
             margin: 0 auto;
@@ -239,9 +256,9 @@
 
         border-radius: 10px;
         display: inline-block;
-
     }
 
 
 
 </style>
+

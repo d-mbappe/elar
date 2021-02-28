@@ -76,6 +76,8 @@
 </script>
 <style lang="scss">
     @import "../../assets/variables";
+
+    /*Переменные стилей*/
     $uiFieldPlaceholderColor: #767676;
     $uiFieldBorderWidth:  2px;
     $uiFieldPaddingRight: 1rem;
